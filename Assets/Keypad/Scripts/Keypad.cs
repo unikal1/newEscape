@@ -125,6 +125,11 @@ namespace NavKeypad
             onAccessGranted?.Invoke();
             panelMesh.material.SetVector("_EmissionColor", screenGrantedColor * screenIntensity);
             audioSource.PlayOneShot(accessGrantedSfx);
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            gameObject.SetActive(false);
+            var fpsLook = FindObjectOfType<FirstPersonLook>();
+            fpsLook.IsInteracting = false;
         }
 
     }
