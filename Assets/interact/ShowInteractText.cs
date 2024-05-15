@@ -2,9 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class ShowInteractText : MonoBehaviour
 {
+    [SerializeField]
+    private TMP_Text interactText;
+    public TMP_Text InteractText { get => interactText; set => interactText = value; }
+
     public Text interactionText;
     public string text;
     private RaycastHit hit;
@@ -25,9 +30,18 @@ public class ShowInteractText : MonoBehaviour
         if (hitSomething && hit.collider.gameObject.tag == "interactable")
         {
             Debug.Log("watch out");
-            interactionText.text = "F to interact";
-            interactionText.transform.position = Camera.main.WorldToScreenPoint(hit.transform.position);
-            interactionText.gameObject.SetActive(true);
+            if(interactionText != null)
+            {
+                interactionText.text = "F to interact";
+                interactionText.transform.position = Camera.main.WorldToScreenPoint(hit.transform.position);
+                interactionText.gameObject.SetActive(true);
+            }
+            else
+            {
+                InteractText.transform.position = Camera.main.WorldToScreenPoint(hit.transform.position);
+                InteractText.gameObject.SetActive(true);
+            }
+
 
             EnableOutline(hit.collider.gameObject);
             lastInteractedObject = hit.collider.gameObject;
@@ -42,7 +56,11 @@ public class ShowInteractText : MonoBehaviour
         }
         else
         {
-            interactionText.gameObject.SetActive(false);
+            if (interactionText != null)
+                interactionText.gameObject.SetActive(false);
+            else
+                InteractText.gameObject.SetActive(false);
+
             if (lastInteractedObject != null)
             {
                 DisableOutline(lastInteractedObject);
