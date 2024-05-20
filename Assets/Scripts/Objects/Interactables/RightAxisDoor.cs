@@ -10,8 +10,16 @@ public class RightAxisDoor : MonoBehaviour, IInteractable
 
 	bool isOpening = false;
 
+	float originXRot;
+	float originZRot;
+
 	Coroutine openCoroutine = null;
 	Coroutine closeCoroutine = null;
+
+	void Start() {
+		originXRot = transform.localEulerAngles.x;
+		originZRot = transform.localEulerAngles.z;
+	}
 
 	void IInteractable.Interact() {
 		if (!isOpened) {
@@ -40,7 +48,7 @@ public class RightAxisDoor : MonoBehaviour, IInteractable
 	}
 
 	IEnumerator OpenCoroutine() {
-		float startRotationY = transform.localEulerAngles.y;
+		float startRotationY = transform.transform.localEulerAngles.y;
 		float elapsedTime = 0f;
 
 		while (elapsedTime < duration) {
@@ -48,16 +56,20 @@ public class RightAxisDoor : MonoBehaviour, IInteractable
 			float t = elapsedTime / duration;
 			float smoothStep = Mathf.SmoothStep(0f, 1f, t);
 			float currentRotationY = Mathf.LerpAngle(startRotationY, targetRotationY, smoothStep);
-			transform.localRotation = Quaternion.Euler(0f, currentRotationY, 0f);
+			transform.localRotation = Quaternion.Euler(originXRot, currentRotationY, originZRot);
 
 			yield return null;
 		}
 		// Ensure the final rotation is set exactly to the target
-		transform.localRotation = Quaternion.Euler(0f, targetRotationY, 0f);
+		transform.localRotation = Quaternion.Euler(originXRot, targetRotationY, originZRot);
+		Debug.Log("opened local: " + transform.localRotation);
+		Debug.Log("opened global: " + transform.rotation);
 	}
 
 	IEnumerator CloseCoroutine() {
 		float startRotationY = transform.localEulerAngles.y;
+		Debug.Log("startRotY: "+ startRotationY);
+
 		float elapsedTime = 0f;
 
 		while (elapsedTime < duration) {
@@ -65,12 +77,14 @@ public class RightAxisDoor : MonoBehaviour, IInteractable
 			float t = elapsedTime / duration;
 			float smoothStep = Mathf.SmoothStep(0f, 1f, t);
 			float currentRotationY = Mathf.LerpAngle(startRotationY, 0f, smoothStep);
-			transform.localRotation = Quaternion.Euler(0f, currentRotationY, 0f);
-			Debug.Log(transform.localEulerAngles);
+			transform.localRotation = Quaternion.Euler(originXRot, currentRotationY, originZRot);
+			/*Debug.Log(transform.localEulerAngles);*/
 
 			yield return null;
 		}
 		// Ensure the final rotation is set exactly to the target
-		transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
+		transform.localRotation = Quaternion.Euler(originXRot, 0f, originZRot);
+		Debug.Log("closed local: " + transform.localRotation);
+		Debug.Log("closed global: " + transform.rotation);
 	}
 }
