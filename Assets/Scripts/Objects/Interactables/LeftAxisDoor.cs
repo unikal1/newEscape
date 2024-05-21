@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LeftAxisDoor : MonoBehaviour, IInteractable {
+public class LeftAxisDoor : MonoBehaviour, IInteractable
+{
 	[SerializeField] bool isOpened = false;
 	[SerializeField] float duration = 0.5f; // 여닫는데 걸리는 시간
 	[SerializeField] float targetRotationY = -80f;
 
-	bool isOpening = false;
+	[SerializeField] List<AudioClip> openSounds;
+	[SerializeField] List<AudioClip> closeSounds;
+	private AudioSource audioSource;
 
 	float originXRot;
 	float originZRot;
@@ -15,23 +18,35 @@ public class LeftAxisDoor : MonoBehaviour, IInteractable {
 	Coroutine openCoroutine = null;
 	Coroutine closeCoroutine = null;
 
-	void Start() {
+	void Start()
+	{
 		originXRot = transform.localEulerAngles.x;
 		originZRot = transform.localEulerAngles.z;
 		Debug.Log("xRot: " + originXRot);
 		Debug.Log("yRot: " + transform.localRotation.y);
 		Debug.Log("zRot: " + originZRot);
+
+		audioSource = GetComponent<AudioSource>();
+		if (audioSource == null)
+		{
+			audioSource = gameObject.AddComponent<AudioSource>();
+		}
 	}
 
-	void IInteractable.Interact() {
-		if (!isOpened) {
-			if (closeCoroutine != null) {
+	void IInteractable.Interact()
+	{
+		if (!isOpened)
+		{
+			if (closeCoroutine != null)
+			{
 				StopCoroutine(closeCoroutine);
 			}
 			openCoroutine = StartCoroutine(OpenCoroutine());
 			isOpened = true;
-		} else {
-			if (openCoroutine != null) {
+		} else
+		{
+			if (openCoroutine != null)
+			{
 				StopCoroutine(openCoroutine);
 			}
 			closeCoroutine = StartCoroutine(CloseCoroutine());
@@ -39,21 +54,26 @@ public class LeftAxisDoor : MonoBehaviour, IInteractable {
 		}
 	}
 
-	void Open() {
+	void Open()
+	{
 		StartCoroutine(OpenCoroutine());
 		isOpened = true;
 	}
 
-	void Close() {
+	void Close()
+	{
 		StartCoroutine(CloseCoroutine());
 		isOpened = false;
 	}
 
-	IEnumerator OpenCoroutine() {
+	IEnumerator OpenCoroutine()
+	{
+		PlayOpenSound();
 		float startRotationY = transform.localEulerAngles.y;
 		float elapsedTime = 0f;
 
-		while (elapsedTime < duration) {
+		while (elapsedTime < duration)
+		{
 			elapsedTime += Time.deltaTime;
 			float t = elapsedTime / duration;
 			float smoothStep = Mathf.SmoothStep(0f, 1f, t);
@@ -66,12 +86,15 @@ public class LeftAxisDoor : MonoBehaviour, IInteractable {
 		transform.localRotation = Quaternion.Euler(originXRot, targetRotationY, originZRot);
 	}
 
-	IEnumerator CloseCoroutine() {
+	IEnumerator CloseCoroutine()
+	{
+		PlayCloseSound();
 		float startRotationY = transform.localEulerAngles.y;
 		Debug.Log(startRotationY);
 		float elapsedTime = 0f;
 
-		while (elapsedTime < duration) {
+		while (elapsedTime < duration)
+		{
 			elapsedTime += Time.deltaTime;
 			float t = elapsedTime / duration;
 			float smoothStep = Mathf.SmoothStep(0f, 1f, t);
@@ -83,5 +106,23 @@ public class LeftAxisDoor : MonoBehaviour, IInteractable {
 		}
 		// Ensure the final rotation is set exactly to the target
 		transform.localRotation = Quaternion.Euler(originXRot, 180f, originZRot);
+	}
+
+	void PlayOpenSound()
+	{
+		if (openSounds.Count > 0)
+		{
+			AudioClip clip = openSounds[Random.Range(0, openSounds.Count)];
+			audioSource.PlayOneShot(clip);
+		}
+	}
+
+	void PlayCloseSound()
+	{
+		if (closeSounds.Count > 0)
+		{
+			AudioClip clip = openSounds[Random.Range(0, closeSounds.Count)];
+			audioSource.PlayOneShot(clip);
+		}
 	}
 }
