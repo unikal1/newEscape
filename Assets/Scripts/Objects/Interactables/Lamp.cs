@@ -7,21 +7,60 @@ public class Lamp : MonoBehaviour, IInteractable
 	[SerializeField] bool isActive = false;
 	[SerializeField] GameObject pointLight;
 
-	void IInteractable.Interact() {
-		if (!isActive) {
+	[SerializeField] List<AudioClip> turnOnSounds;
+	[SerializeField] List<AudioClip> turnOffSounds;
+
+	private AudioSource audioSource;
+
+	void Start()
+	{
+		audioSource = GetComponent<AudioSource>();
+		if (audioSource == null)
+		{
+			audioSource = gameObject.AddComponent<AudioSource>();
+		}
+	}
+
+	void IInteractable.Interact()
+	{
+		if (!isActive)
+		{
 			TurnOn();
-		} else {
+		} else
+		{
 			TurnOff();
 		}
 	}
 
-	void TurnOn() {
+	void TurnOn()
+	{
 		isActive = true;
 		pointLight.SetActive(true);
+		PlayTurnOnSound();
 	}
 
-	void TurnOff() {
+	void TurnOff()
+	{
 		isActive = false;
 		pointLight.SetActive(false);
+		PlayTurnOffSound();
+	}
+
+	void PlayTurnOnSound()
+	{
+		if (turnOnSounds.Count > 0)
+		{
+			AudioClip clip = turnOnSounds[Random.Range(0, turnOnSounds.Count)];
+			audioSource.PlayOneShot(clip);
+		}
+	}
+
+	void PlayTurnOffSound()
+	{
+		if (turnOffSounds.Count > 0)
+		{
+			AudioClip clip = turnOffSounds[Random.Range(0, turnOffSounds.Count)];
+			audioSource.PlayOneShot(clip);
+		}
 	}
 }

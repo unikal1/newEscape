@@ -123,6 +123,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isActive: 0
   pointLight: {fileID: 676184947046565109}
+  turnOnSounds:
+  - {fileID: 8300000, guid: 48e63478ee656da41858d4d21cf9fc83, type: 3}
+  turnOffSounds:
+  - {fileID: 8300000, guid: eed2db7765f0e0a4ebf18a64c02704d7, type: 3}
 --- !u!114 &2202730500514351491
 MonoBehaviour:
   m_ObjectHideFlags: 0
