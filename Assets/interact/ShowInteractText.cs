@@ -42,8 +42,9 @@ public class ShowInteractText : MonoBehaviour
                 InteractText.gameObject.SetActive(true);
             }
 
-
-            EnableOutline(hit.collider.gameObject);
+			if (lastInteractedObject != null)
+				DisableOutline(lastInteractedObject);
+			EnableOutline(hit.collider.gameObject);
             lastInteractedObject = hit.collider.gameObject;
             if(Input.GetKeyDown(KeyCode.F))
             {
@@ -64,7 +65,8 @@ public class ShowInteractText : MonoBehaviour
 				InteractText.gameObject.SetActive(true);
 			}
 
-
+			if (lastInteractedObject != null)
+				DisableOutline(lastInteractedObject);
 			EnableOutline(hit.collider.gameObject);
 			lastInteractedObject = hit.collider.gameObject;
 			if (Input.GetKeyDown(KeyCode.F)) {
