@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class LeftAxisDoor : MonoBehaviour, IInteractable {
-	[SerializeField] bool isOpened;
-	[SerializeField] float duration; // 여닫는데 걸리는 시간
-	[SerializeField] float targetRotationY;
+	[SerializeField] bool isOpened = false;
+	[SerializeField] float duration = 0.5f; // 여닫는데 걸리는 시간
+	[SerializeField] float targetRotationY = -80f;
 
 	bool isOpening = false;
 
