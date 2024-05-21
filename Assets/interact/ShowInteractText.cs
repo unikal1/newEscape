@@ -54,6 +54,26 @@ public class ShowInteractText : MonoBehaviour
                 }
             }
         }
+		else if (hitSomething && hit.collider.gameObject.tag == "obtainable") {
+			if (interactionText != null) {
+				interactionText.text = "F to pick up";
+				interactionText.transform.position = Camera.main.WorldToScreenPoint(hit.transform.position);
+				interactionText.gameObject.SetActive(true);
+			} else {
+				InteractText.transform.position = Camera.main.WorldToScreenPoint(hit.transform.position);
+				InteractText.gameObject.SetActive(true);
+			}
+
+
+			EnableOutline(hit.collider.gameObject);
+			lastInteractedObject = hit.collider.gameObject;
+			if (Input.GetKeyDown(KeyCode.F)) {
+				IObtainable obtainable = hit.collider.GetComponent<IObtainable>();
+				if (obtainable != null) {
+					obtainable.Obtain();
+				}
+			}
+		}
         else
         {
             if (interactionText != null)

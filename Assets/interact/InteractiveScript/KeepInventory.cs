@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KeepInventory : MonoBehaviour, IInteractable
+public class KeepInventory : MonoBehaviour, IObtainable
 {
 
-    public void Interact()
+    public void Obtain()
     {
         Destroy(gameObject);
     }

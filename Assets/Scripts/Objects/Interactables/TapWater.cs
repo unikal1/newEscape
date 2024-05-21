@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class Tap : MonoBehaviour, IInteractable {
+public class TapWater : MonoBehaviour, IInteractable {
 	[SerializeField] bool isActive = false;
 	[SerializeField] ParticleSystem dropParticle;
 	[SerializeField] ParticleSystem hitParticle;
