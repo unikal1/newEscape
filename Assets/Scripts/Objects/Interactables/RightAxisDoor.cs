@@ -7,6 +7,7 @@ public class RightAxisDoor : MonoBehaviour, IInteractable
 	[SerializeField] bool isOpened = false;
 	[SerializeField] float duration = 0.5f; // 여닫는데 걸리는 시간
 	[SerializeField] float targetRotationY = -80f;
+	[SerializeField] float soundVolume = 1f;
 
 	[SerializeField] List<AudioClip> openSounds;
 	[SerializeField] List<AudioClip> closeSounds;
@@ -24,10 +25,7 @@ public class RightAxisDoor : MonoBehaviour, IInteractable
 		originZRot = transform.localEulerAngles.z;
 
 		audioSource = GetComponent<AudioSource>();
-		if (audioSource == null)
-		{
-			audioSource = gameObject.AddComponent<AudioSource>();
-		}
+		AudioSourceUtil.Instance.SetAudioSourceProperties(audioSource);
 	}
 
 	void IInteractable.Interact() {
@@ -72,14 +70,11 @@ public class RightAxisDoor : MonoBehaviour, IInteractable
 		}
 		// Ensure the final rotation is set exactly to the target
 		transform.localRotation = Quaternion.Euler(originXRot, targetRotationY, originZRot);
-		Debug.Log("opened local: " + transform.localRotation);
-		Debug.Log("opened global: " + transform.rotation);
 	}
 
 	IEnumerator CloseCoroutine() {
 		PlayCloseSound();
 		float startRotationY = transform.localEulerAngles.y;
-		Debug.Log("startRotY: "+ startRotationY);
 
 		float elapsedTime = 0f;
 
@@ -89,14 +84,11 @@ public class RightAxisDoor : MonoBehaviour, IInteractable
 			float smoothStep = Mathf.SmoothStep(0f, 1f, t);
 			float currentRotationY = Mathf.LerpAngle(startRotationY, 0f, smoothStep);
 			transform.localRotation = Quaternion.Euler(originXRot, currentRotationY, originZRot);
-			/*Debug.Log(transform.localEulerAngles);*/
 
 			yield return null;
 		}
 		// Ensure the final rotation is set exactly to the target
 		transform.localRotation = Quaternion.Euler(originXRot, 0f, originZRot);
-		Debug.Log("closed local: " + transform.localRotation);
-		Debug.Log("closed global: " + transform.rotation);
 	}
 
 	void PlayOpenSound()

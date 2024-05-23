@@ -15,10 +15,7 @@ public class Lamp : MonoBehaviour, IInteractable
 	void Start()
 	{
 		audioSource = GetComponent<AudioSource>();
-		if (audioSource == null)
-		{
-			audioSource = gameObject.AddComponent<AudioSource>();
-		}
+		AudioSourceUtil.Instance.SetAudioSourceProperties(audioSource);
 	}
 
 	void IInteractable.Interact()

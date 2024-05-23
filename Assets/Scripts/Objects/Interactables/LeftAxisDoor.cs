@@ -22,15 +22,9 @@ public class LeftAxisDoor : MonoBehaviour, IInteractable
 	{
 		originXRot = transform.localEulerAngles.x;
 		originZRot = transform.localEulerAngles.z;
-		Debug.Log("xRot: " + originXRot);
-		Debug.Log("yRot: " + transform.localRotation.y);
-		Debug.Log("zRot: " + originZRot);
 
 		audioSource = GetComponent<AudioSource>();
-		if (audioSource == null)
-		{
-			audioSource = gameObject.AddComponent<AudioSource>();
-		}
+		AudioSourceUtil.Instance.SetAudioSourceProperties(audioSource);
 	}
 
 	void IInteractable.Interact()
@@ -90,7 +84,6 @@ public class LeftAxisDoor : MonoBehaviour, IInteractable
 	{
 		PlayCloseSound();
 		float startRotationY = transform.localEulerAngles.y;
-		Debug.Log(startRotationY);
 		float elapsedTime = 0f;
 
 		while (elapsedTime < duration)
@@ -100,7 +93,6 @@ public class LeftAxisDoor : MonoBehaviour, IInteractable
 			float smoothStep = Mathf.SmoothStep(0f, 1f, t);
 			float currentRotationY = Mathf.LerpAngle(startRotationY, 180f, smoothStep);
 			transform.localRotation = Quaternion.Euler(originXRot, currentRotationY, originZRot);
-			/*Debug.Log(transform.localEulerAngles);*/
 
 			yield return null;
 		}
