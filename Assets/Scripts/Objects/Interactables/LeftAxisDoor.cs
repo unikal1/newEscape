@@ -13,6 +13,7 @@ public class LeftAxisDoor : MonoBehaviour, IInteractable
 	private AudioSource audioSource;
 
 	float originXRot;
+	[SerializeField] float originYRot = 180f;
 	float originZRot;
 
 	Coroutine openCoroutine = null;
@@ -91,13 +92,13 @@ public class LeftAxisDoor : MonoBehaviour, IInteractable
 			elapsedTime += Time.deltaTime;
 			float t = elapsedTime / duration;
 			float smoothStep = Mathf.SmoothStep(0f, 1f, t);
-			float currentRotationY = Mathf.LerpAngle(startRotationY, 180f, smoothStep);
+			float currentRotationY = Mathf.LerpAngle(startRotationY, originYRot, smoothStep);
 			transform.localRotation = Quaternion.Euler(originXRot, currentRotationY, originZRot);
 
 			yield return null;
 		}
 		// Ensure the final rotation is set exactly to the target
-		transform.localRotation = Quaternion.Euler(originXRot, 180f, originZRot);
+		transform.localRotation = Quaternion.Euler(originXRot, originYRot, originZRot);
 	}
 
 	void PlayOpenSound()
@@ -113,7 +114,7 @@ public class LeftAxisDoor : MonoBehaviour, IInteractable
 	{
 		if (closeSounds.Count > 0)
 		{
-			AudioClip clip = openSounds[Random.Range(0, closeSounds.Count)];
+			AudioClip clip = closeSounds[Random.Range(0, closeSounds.Count)];
 			audioSource.PlayOneShot(clip);
 		}
 	}

@@ -115,7 +115,7 @@ public class Drawer : MonoBehaviour, IInteractable
 	{
 		if (closeSounds.Count > 0)
 		{
-			AudioClip clip = openSounds[Random.Range(0, closeSounds.Count)];
+			AudioClip clip = closeSounds[Random.Range(0, closeSounds.Count)];
 			audioSource.PlayOneShot(clip);
 		}
 	}
