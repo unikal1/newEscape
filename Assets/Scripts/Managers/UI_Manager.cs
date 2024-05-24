@@ -42,15 +42,20 @@ public class UI_Manager
             canvas.sortingOrder = 5;
         }
     }
-    public T ShowAnyUI<T>(string name = null) where T : UI_Base
+    public T ShowExtraUI<T>(string name = null, Transform parent = null) where T : UI_Base
     {
         if (string.IsNullOrEmpty(name))
         {
             name = typeof(T).Name;
         }
-        GameObject go = Managers.Resource.Instantiate($"UI/{name}");
+        GameObject go = Managers.Resource.Instantiate($"UI/ExtraUI/{name}");
         T anyUI = Util.GetOrAddComponent<T>(go);
-        go.transform.SetParent(Root.transform);
+
+        if(parent == null)
+            go.transform.SetParent(Root.transform);
+
+        go.transform.SetParent(parent);
+
         return anyUI;
     }
     public T ShowPopUpUI<T>(string name = null) where T : UI_Popup

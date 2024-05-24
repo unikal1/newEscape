@@ -7,14 +7,15 @@ using static DataDefine;
 public class DataManager : MonoBehaviour
 {
     public static DataManager singleTon;
-    public JsonManager jsonManager;
     public GameObject _gameObject;
+    [SerializeField]
+    private Inventory inventory;
+    public Inventory Inventory { get { return inventory; }  set { inventory = Inventory; } }
     // Start is called before the first frame update
 
 
     public void Awake()
     {
-        jsonManager = new JsonManager();
         if (singleTon == null)
         {
             singleTon = this;
@@ -24,8 +25,13 @@ public class DataManager : MonoBehaviour
         {
             Destroy(singleTon._gameObject);
         }
+        Init();
     }
 
+    public void Init()
+    {
+        Inventory = JsonManager.Load<Inventory>();
+    }
     private void Start()
     {
 
