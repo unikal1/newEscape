@@ -5,12 +5,13 @@ using UnityEngine;
 public class RightAxisDoor : MonoBehaviour, IInteractable
 {
 	[SerializeField] bool isOpened = false;
+	[SerializeField] bool isLocked = false;
 	[SerializeField] float duration = 0.5f; // 여닫는데 걸리는 시간
 	[SerializeField] float targetRotationY = -80f;
-	[SerializeField] float soundVolume = 1f;
 
 	[SerializeField] List<AudioClip> openSounds;
 	[SerializeField] List<AudioClip> closeSounds;
+	[SerializeField] List<AudioClip> lockedInteractSounds;
 	private AudioSource audioSource;
 
 	bool isOpening = false;
@@ -29,6 +30,12 @@ public class RightAxisDoor : MonoBehaviour, IInteractable
 	}
 
 	void IInteractable.Interact() {
+		if (isLocked)
+		{
+			PlayLockedInteractSound();
+			return;
+		}
+
 		if (!isOpened) {
 			if (closeCoroutine != null) {
 				StopCoroutine(closeCoroutine);
@@ -105,6 +112,15 @@ public class RightAxisDoor : MonoBehaviour, IInteractable
 		if (closeSounds.Count > 0)
 		{
 			AudioClip clip = closeSounds[Random.Range(0, closeSounds.Count)];
+			audioSource.PlayOneShot(clip);
+		}
+	}
+
+	void PlayLockedInteractSound()
+	{
+		if (lockedInteractSounds.Count > 0)
+		{
+			AudioClip clip = lockedInteractSounds[Random.Range(0, lockedInteractSounds.Count)];
 			audioSource.PlayOneShot(clip);
 		}
 	}
