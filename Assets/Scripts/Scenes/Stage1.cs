@@ -8,11 +8,14 @@ public class Stage1 : MonoBehaviour
 	[Header("Initialization")]
 	[SerializeField] GameObject lamp;
 	[SerializeField] GameObject bodyContainingMorgueBoxDoor;
+	[SerializeField] GameObject body;
 	[SerializeField] AudioClip ScareSound;
+	[SerializeField] GameObject key;
 
 	[Header("Event Parameters")]
 	bool firstEventFlag = false;
     bool bodyEncounter = false;
+	bool keyObtained = false;
 
 	[Header("others")]
 	Coroutine lampBlinkCoroutine;
@@ -22,6 +25,7 @@ public class Stage1 : MonoBehaviour
     {
 		lampBlinkCoroutine = lamp.GetComponent<Lamp>().BlinkLight();
 		bodyContainingMorgueBoxDoor.GetComponent<RightAxisDoor>().OnDoorOpened.AddListener(HandleDoorOpened);
+		key.GetComponent<Key>().OnObtain.AddListener(HandleKeyObtained);
 		audioSource = GetComponent<AudioSource>();
 	}
 
@@ -34,20 +38,27 @@ public class Stage1 : MonoBehaviour
 			audioSource.PlayOneShot(ScareSound);
 			lampBlinkCoroutine = lamp.GetComponent<Lamp>().BlinkLight();
 
-			// 5초 후에 모든 문 열림
+			// 5초 후에 모든 문 열림, 시체 사라짐
 			yield return new WaitForSeconds(5f);
 			lamp.GetComponent<Lamp>().StopCoroutine(lampBlinkCoroutine);
 			lampBlinkCoroutine = lamp.GetComponent<Lamp>().BlinkLight(1, 1f, 0f, false);
 			List<GameObject> doorList = FindGameObjects.ContainsString("MorgueBox_Door");
 			doorList.ForEach(door => door.GetComponent<RightAxisDoor>().Open(false));
 			bodyContainingMorgueBoxDoor.GetComponent<RightAxisDoor>().OnDoorOpened.RemoveListener(HandleDoorOpened);
-			bodyContainingMorgueBoxDoor.GetComponent<RightAxisDoor>().Close(false);	
+			bodyContainingMorgueBoxDoor.GetComponent<RightAxisDoor>().Close(false);
+			body.SetActive(false);
+			key.SetActive(true);
 			
 			// 전등을 다시 원상태로 복구
 			yield return new WaitForSeconds(1f);
 			lampBlinkCoroutine = lamp.GetComponent<Lamp>().BlinkLight();
 		}
 		StartCoroutine(coroutine());
+	}
+
+	void HandleKeyObtained() {
+		key.GetComponent<Key>().OnObtain.RemoveListener(HandleKeyObtained);
+
 	}
 
 	
