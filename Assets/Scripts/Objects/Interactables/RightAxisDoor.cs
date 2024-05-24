@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class RightAxisDoor : MonoBehaviour, IInteractable
 {
@@ -12,6 +13,10 @@ public class RightAxisDoor : MonoBehaviour, IInteractable
 	[SerializeField] List<AudioClip> openSounds;
 	[SerializeField] List<AudioClip> closeSounds;
 	[SerializeField] List<AudioClip> lockedInteractSounds;
+
+	public UnityEvent OnDoorOpened;
+	public UnityEvent OnDoorClosed;
+
 	private AudioSource audioSource;
 
 	bool isOpening = false;
@@ -21,7 +26,7 @@ public class RightAxisDoor : MonoBehaviour, IInteractable
 	Coroutine openCoroutine = null;
 	Coroutine closeCoroutine = null;
 
-	void Start() {
+	void Awake() {
 		originXRot = transform.localEulerAngles.x;
 		originZRot = transform.localEulerAngles.z;
 
@@ -37,66 +42,70 @@ public class RightAxisDoor : MonoBehaviour, IInteractable
 		}
 
 		if (!isOpened) {
-			if (closeCoroutine != null) {
-				StopCoroutine(closeCoroutine);
-			}
-			openCoroutine = StartCoroutine(OpenCoroutine());
-			isOpened = true;
+			Open();
 		} else {
-			if (openCoroutine != null) {
-				StopCoroutine(openCoroutine);
+			Close();
+		}
+	}
+
+	public void Open(bool playSound = true) {
+		IEnumerator OpenCoroutine() {
+			if (playSound) PlayOpenSound();
+			float startRotationY = transform.transform.localEulerAngles.y;
+			float elapsedTime = 0f;
+
+			while (elapsedTime < duration) {
+				elapsedTime += Time.deltaTime;
+				float t = elapsedTime / duration;
+				float smoothStep = Mathf.SmoothStep(0f, 1f, t);
+				float currentRotationY = Mathf.LerpAngle(startRotationY, targetRotationY, smoothStep);
+				transform.localRotation = Quaternion.Euler(originXRot, currentRotationY, originZRot);
+
+				yield return null;
 			}
-			closeCoroutine = StartCoroutine(CloseCoroutine());
-			isOpened = false;
+			// Ensure the final rotation is set exactly to the target
+			transform.localRotation = Quaternion.Euler(originXRot, targetRotationY, originZRot);
 		}
-	}
 
-	void Open() {
-		StartCoroutine(OpenCoroutine());
+		if (closeCoroutine != null) {
+			StopCoroutine(closeCoroutine);
+		}
+		openCoroutine = StartCoroutine(OpenCoroutine());
 		isOpened = true;
+		OnDoorOpened?.Invoke();
 	}
 
-	void Close() {
-		StartCoroutine(CloseCoroutine());
+	public void Close(bool playSound = true) {
+		IEnumerator CloseCoroutine() {
+			if (playSound) PlayCloseSound();
+			float startRotationY = transform.localEulerAngles.y;
+
+			float elapsedTime = 0f;
+
+			while (elapsedTime < duration) {
+				elapsedTime += Time.deltaTime;
+				float t = elapsedTime / duration;
+				float smoothStep = Mathf.SmoothStep(0f, 1f, t);
+				float currentRotationY = Mathf.LerpAngle(startRotationY, 0f, smoothStep);
+				transform.localRotation = Quaternion.Euler(originXRot, currentRotationY, originZRot);
+
+				yield return null;
+			}
+			// Ensure the final rotation is set exactly to the target
+			transform.localRotation = Quaternion.Euler(originXRot, 0f, originZRot);
+		}
+
+		if (openCoroutine != null) {
+			StopCoroutine(openCoroutine);
+		}
+		closeCoroutine = StartCoroutine(CloseCoroutine());
 		isOpened = false;
+		OnDoorClosed?.Invoke();
 	}
 
-	IEnumerator OpenCoroutine() {
-		PlayOpenSound();
-		float startRotationY = transform.transform.localEulerAngles.y;
-		float elapsedTime = 0f;
+	
 
-		while (elapsedTime < duration) {
-			elapsedTime += Time.deltaTime;
-			float t = elapsedTime / duration;
-			float smoothStep = Mathf.SmoothStep(0f, 1f, t);
-			float currentRotationY = Mathf.LerpAngle(startRotationY, targetRotationY, smoothStep);
-			transform.localRotation = Quaternion.Euler(originXRot, currentRotationY, originZRot);
-
-			yield return null;
-		}
-		// Ensure the final rotation is set exactly to the target
-		transform.localRotation = Quaternion.Euler(originXRot, targetRotationY, originZRot);
-	}
-
-	IEnumerator CloseCoroutine() {
-		PlayCloseSound();
-		float startRotationY = transform.localEulerAngles.y;
-
-		float elapsedTime = 0f;
-
-		while (elapsedTime < duration) {
-			elapsedTime += Time.deltaTime;
-			float t = elapsedTime / duration;
-			float smoothStep = Mathf.SmoothStep(0f, 1f, t);
-			float currentRotationY = Mathf.LerpAngle(startRotationY, 0f, smoothStep);
-			transform.localRotation = Quaternion.Euler(originXRot, currentRotationY, originZRot);
-
-			yield return null;
-		}
-		// Ensure the final rotation is set exactly to the target
-		transform.localRotation = Quaternion.Euler(originXRot, 0f, originZRot);
-	}
+	
 
 	void PlayOpenSound()
 	{

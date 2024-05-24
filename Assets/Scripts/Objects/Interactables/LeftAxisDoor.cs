@@ -21,7 +21,7 @@ public class LeftAxisDoor : MonoBehaviour, IInteractable
 	Coroutine openCoroutine = null;
 	Coroutine closeCoroutine = null;
 
-	void Start()
+	void Awake()
 	{
 		originXRot = transform.localEulerAngles.x;
 		originZRot = transform.localEulerAngles.z;
@@ -44,7 +44,6 @@ public class LeftAxisDoor : MonoBehaviour, IInteractable
 				StopCoroutine(closeCoroutine);
 			}
 			openCoroutine = StartCoroutine(OpenCoroutine());
-			isOpened = true;
 		} else
 		{
 			if (openCoroutine != null)
@@ -52,18 +51,15 @@ public class LeftAxisDoor : MonoBehaviour, IInteractable
 				StopCoroutine(openCoroutine);
 			}
 			closeCoroutine = StartCoroutine(CloseCoroutine());
-			isOpened = false;
 		}
 	}
 
-	void Open()
-	{
+	public void Open() {
 		StartCoroutine(OpenCoroutine());
 		isOpened = true;
 	}
 
-	void Close()
-	{
+	public void Close() {
 		StartCoroutine(CloseCoroutine());
 		isOpened = false;
 	}

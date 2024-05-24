@@ -8,7 +8,7 @@ public class Paper : MonoBehaviour, IObtainable
 
 	private AudioSource audioSource;
 
-	void Start()
+	void Awake()
 	{
 		audioSource = GetComponent<AudioSource>();
 		AudioSourceUtil.Instance.SetAudioSourceProperties(audioSource);

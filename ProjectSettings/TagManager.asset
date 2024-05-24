@@ -6,6 +6,7 @@ TagManager:
   tags:
   - interactable
   - obtainable
+  - horror
   layers:
   - Default
   - TransparentFX
