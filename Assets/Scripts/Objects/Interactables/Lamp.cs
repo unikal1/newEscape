@@ -1,21 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 
 public class Lamp : MonoBehaviour, IInteractable
 {
 	[SerializeField] bool isActive = false;
-	[SerializeField] GameObject pointLight;
 
 	[SerializeField] List<AudioClip> turnOnSounds;
 	[SerializeField] List<AudioClip> turnOffSounds;
+	[SerializeField] AudioClip lightBuzzSound;
 
 	private AudioSource audioSource;
+	GameObject pointLight;
 
 	void Start()
 	{
+		pointLight = transform.GetChild(0).gameObject;
 		audioSource = GetComponent<AudioSource>();
 		AudioSourceUtil.Instance.SetAudioSourceProperties(audioSource);
+		if (isActive)
+		{
+			pointLight.SetActive(true);
+			PlayLightBuzzSound();
+		}
 	}
 
 	void IInteractable.Interact()
@@ -34,14 +42,17 @@ public class Lamp : MonoBehaviour, IInteractable
 		isActive = true;
 		pointLight.SetActive(true);
 		PlayTurnOnSound();
+		PlayLightBuzzSound();
 	}
 
 	void TurnOff()
 	{
 		isActive = false;
 		pointLight.SetActive(false);
-		PlayTurnOffSound();
+		StopLightBuzzSound();
 	}
+
+
 
 	void PlayTurnOnSound()
 	{
@@ -59,5 +70,19 @@ public class Lamp : MonoBehaviour, IInteractable
 			AudioClip clip = turnOffSounds[Random.Range(0, turnOffSounds.Count)];
 			audioSource.PlayOneShot(clip);
 		}
+	}
+	void PlayLightBuzzSound()
+	{
+		if (isActive)
+		{
+			audioSource.loop = true;
+			audioSource.clip = lightBuzzSound;
+			audioSource.Play();
+		}
+	}
+	void StopLightBuzzSound()
+	{
+		audioSource.loop = false;
+		audioSource.Stop();
 	}
 }
