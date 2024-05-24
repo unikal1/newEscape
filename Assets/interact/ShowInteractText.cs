@@ -15,10 +15,8 @@ public class ShowInteractText : MonoBehaviour
     private RaycastHit hit;
     private Ray ray;
     private GameObject lastInteractedObject;
-    // Start is called before the first frame update
 
-    // Update is called once per frame
-    void Update()
+	void Update()
     {
         ObjectHit();
     }
@@ -29,7 +27,6 @@ public class ShowInteractText : MonoBehaviour
 
         if (hitSomething && hit.collider.gameObject.tag == "interactable")
         {
-            Debug.Log("watch out");
             if(interactionText != null)
             {
                 interactionText.text = "F to interact";
