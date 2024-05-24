@@ -3,15 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using static DataDefine;
 
-[CreateAssetMenu(fileName = "ItemData", menuName = "Scriptable Object/ItemData", order = int.MaxValue)]
-public class BaseItemData : ScriptableObject
+public class BaseItemData
 {
     [SerializeField]
     private EItemType itemType;
     public EItemType ItemType { get { return itemType; } set { itemType = value; } }
 
     [SerializeField]
-    private Sprite itemSprite;
-    public Sprite ItemSprite { get { return itemSprite; } set { itemSprite = value; } }
-
+    private string itemSprite;
+    public string ItemSprite { get { return itemSprite; } set { itemSprite = value; } }
+        
+    public BaseItemData()
+    {
+        ItemType = EItemType.Default;
+        ItemSprite = null;
+    }
+    public BaseItemData(EItemType itemType, string itemSprite)
+    {
+        ItemType = itemType;
+        ItemSprite = itemSprite;
+    }
 }

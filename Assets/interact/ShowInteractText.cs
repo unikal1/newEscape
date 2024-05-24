@@ -16,7 +16,12 @@ public class ShowInteractText : MonoBehaviour
     private Ray ray;
     private GameObject lastInteractedObject;
 
-	void Update()
+    void Start()
+    {
+        if (interactText == null)
+            interactionText = Managers.UI.ShowPopUpUI<UI_InteractionText>().InteractionText;
+    }
+    void Update()
     {
         ObjectHit();
     }
@@ -32,11 +37,6 @@ public class ShowInteractText : MonoBehaviour
                 interactionText.text = "F to interact";
                 interactionText.transform.position = Camera.main.WorldToScreenPoint(hit.transform.position);
                 interactionText.gameObject.SetActive(true);
-            }
-            else
-            {
-                InteractText.transform.position = Camera.main.WorldToScreenPoint(hit.transform.position);
-                InteractText.gameObject.SetActive(true);
             }
 
 			if (lastInteractedObject != null)
@@ -57,9 +57,6 @@ public class ShowInteractText : MonoBehaviour
 				interactionText.text = "F to pick up";
 				interactionText.transform.position = Camera.main.WorldToScreenPoint(hit.transform.position);
 				interactionText.gameObject.SetActive(true);
-			} else {
-				InteractText.transform.position = Camera.main.WorldToScreenPoint(hit.transform.position);
-				InteractText.gameObject.SetActive(true);
 			}
 
 			if (lastInteractedObject != null)
@@ -68,17 +65,15 @@ public class ShowInteractText : MonoBehaviour
 			lastInteractedObject = hit.collider.gameObject;
 			if (Input.GetKeyDown(KeyCode.F)) {
 				IObtainable obtainable = hit.collider.GetComponent<IObtainable>();
-				if (obtainable != null) {
+				if (obtainable != null)
 					obtainable.Obtain();
-				}
 			}
 		}
         else
         {
             if (interactionText != null)
                 interactionText.gameObject.SetActive(false);
-            else
-                InteractText.gameObject.SetActive(false);
+
 
             if (lastInteractedObject != null)
             {

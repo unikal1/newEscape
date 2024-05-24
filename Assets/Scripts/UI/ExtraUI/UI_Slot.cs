@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class UI_Slot : UI_Base
 {
     [SerializeField]
-    private int index = 1;
+    private int index = 0;
     public int Index { get { return index; } set { index = value; } }
 
     [SerializeField]
@@ -23,7 +23,15 @@ public class UI_Slot : UI_Base
     {
         if(itemData != null)
         {
-            SlotImage.sprite = ItemData.ItemSprite;
+            Sprite itemSprite = Managers.Resource.Load<Sprite>($"Sprites/{itemData.ItemSprite}");
+            if(itemSprite != null)
+            {
+                SlotImage.sprite = itemSprite;
+            }
+            else
+            {
+                SlotImage.sprite = null;
+            }
             SlotImage.color = new Color(1, 1, 1, 1);
         }
         else
@@ -45,11 +53,11 @@ public class UI_Slot : UI_Base
 
     public void UseItem()
     {
-        if (ItemData == null)
-            return;
-       
         switch (ItemData.ItemType)
         {
+            case DataDefine.EItemType.Default:
+                Debug.Log("No Item");
+                break;
             case DataDefine.EItemType.Paper0:
                 Debug.Log("Paper0 Use");
                 break;

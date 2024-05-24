@@ -6,31 +6,23 @@ using static DataDefine;
 
 public class DataManager : MonoBehaviour
 {
-    public static DataManager singleTon;
-    public GameObject _gameObject;
     [SerializeField]
-    private Inventory inventory;
-    public Inventory Inventory { get { return inventory; }  set { inventory = Inventory; } }
+    private Inventory inventorydata;
+    public Inventory InventoryData { get { return inventorydata; }  set { inventorydata = value; } }
+
+    [SerializeField]
+    private int selectedSlotIndex;
+    public int SelectedSlotIndex { get { return selectedSlotIndex; } set { selectedSlotIndex = value; } }
     // Start is called before the first frame update
 
 
     public void Awake()
     {
-        if (singleTon == null)
-        {
-            singleTon = this;
-            DontDestroyOnLoad(_gameObject);
-        }
-        else if (singleTon != this)
-        {
-            Destroy(singleTon._gameObject);
-        }
-        Init();
     }
 
     public void Init()
     {
-        Inventory = JsonManager.Load<Inventory>();
+        InventoryData = JsonManager.Load<Inventory>();
     }
     private void Start()
     {

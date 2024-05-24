@@ -14,6 +14,7 @@ public class Managers : MonoBehaviour
     SoundManager _sound = new SoundManager();
     PoolManager _pool = new PoolManager();
     GameManagerEx _game = new GameManagerEx();
+    DataManager _data = new DataManager();
 
     public static GameManagerEx Game { get { return Instance._game; } }
     public static UI_Manager UI { get { return Instance._ui; } }
@@ -22,6 +23,7 @@ public class Managers : MonoBehaviour
     public static InputManager Input { get { return Instance._input; } }
     public static SoundManager Sound { get { return Instance._sound; } }
     public static PoolManager Pool { get { return Instance._pool; } }
+    public static DataManager Data { get { return Instance._data; } }
 
     void Start()
     {
@@ -30,7 +32,7 @@ public class Managers : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //_input.OnUpdate();
+        _input.OnUpdate();
     }
     static void Init()
     {
@@ -43,6 +45,7 @@ public class Managers : MonoBehaviour
         DontDestroyOnLoad(go);
         s_instance = go.GetComponent<Managers>();
 
+        s_instance._data.Init();
         s_instance._pool.Init();
         s_instance._sound.Init();
     }

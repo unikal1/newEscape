@@ -11,17 +11,7 @@ public class KeyPadTestScene : BaseScene
 
     protected override void Init()
     {
-        Managers.UI.ShowSceneUI<UI_GameScene>();
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        base.Init();
+        SceneUI = Managers.UI.ShowSceneUI<UI_GameScene>();
     }
 }

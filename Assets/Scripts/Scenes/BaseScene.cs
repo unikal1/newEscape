@@ -5,6 +5,17 @@ using UnityEngine.EventSystems;
 
 public abstract class BaseScene : MonoBehaviour
 {
+    private UI_Scene _sceneui;
+    public UI_Scene SceneUI
+    {
+        get
+        {
+            if (_sceneui == null)
+                _sceneui = GetComponentInChildren<UI_Scene>();
+            return _sceneui;
+        }
+        protected set { _sceneui = value; }
+    }
     public Define.Scene SceneType { get; protected set; } = Define.Scene.Unknown;
     void Awake()
     {

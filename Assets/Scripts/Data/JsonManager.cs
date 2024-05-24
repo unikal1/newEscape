@@ -39,7 +39,7 @@ public static class JsonManager
     }
     public static T Load<T>(string name = null) where T : new()
     {
-        T data;
+        T data = new();
         if (string.IsNullOrEmpty(name))
         {
             name = typeof(T).Name + ".json";
@@ -80,9 +80,6 @@ public static class JsonManager
         }
         else
         {
-            TextAsset textAsset = Managers.Resource.Load<TextAsset>($"Data/{typeof(T).Name}");
-            Debug.Log(textAsset.text);
-            data = JsonUtility.FromJson<T>(textAsset.text);
             Save<T>(data);
         }
         return data;

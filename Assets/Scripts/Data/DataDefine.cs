@@ -8,6 +8,7 @@ public class DataDefine
     [System.Serializable]
     public enum EItemType
     {
+        Default,
         Paper0,
         Paper1,
         Light,
@@ -19,7 +20,11 @@ public class DataDefine
         public List<BaseItemData> itemDatas;
         public Inventory()
         {
-            itemDatas = null;
+            itemDatas = new List<BaseItemData>();
+            for (int i = 0; i < 4; i++)
+            {
+                itemDatas.Add(new BaseItemData());
+            }
         }
     }
 }

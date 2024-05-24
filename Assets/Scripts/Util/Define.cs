@@ -32,7 +32,6 @@ public class Define
         Press,
         Click
     }
-
     public enum Scene
     {
         Unknown,
