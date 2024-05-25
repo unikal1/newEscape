@@ -31,8 +31,11 @@ public class RightAxisDoor : MonoBehaviour, IInteractable
 		originZRot = transform.localEulerAngles.z;
 
 		audioSource = GetComponent<AudioSource>();
-		AudioSourceUtil.Instance.SetAudioSourceProperties(audioSource);
-	}
+		if(audioSource != null)
+			AudioSourceUtil.Instance.SetAudioSourceProperties(audioSource);
+        else
+            Debug.LogWarning("AudioSource is not attached to " + gameObject.name);
+    }
 
 	void IInteractable.Interact() {
 		if (isLocked)

@@ -66,7 +66,10 @@ public class ShowInteractText : MonoBehaviour
 			if (Input.GetKeyDown(KeyCode.F)) {
 				IObtainable obtainable = hit.collider.GetComponent<IObtainable>();
 				if (obtainable != null)
-					obtainable.Obtain();
+                {
+                    obtainable.Obtain();
+                    lastInteractedObject = null;
+                }
 			}
 		}
         else

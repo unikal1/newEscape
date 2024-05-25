@@ -112,8 +112,12 @@ public class FirstPersonMovement : MonoBehaviour
 
     public void OnESCDown()
     {
-        if(Keypad.gameObject.activeSelf)
-            Keypad.gameObject.SetActive(false);
+        if (Keypad != null)
+        {
+            if (Keypad.gameObject.activeSelf)
+                Keypad.gameObject.SetActive(false);
+        }
+
         var fpsLook = FindObjectOfType<FirstPersonLook>();
         if (fpsLook.IsInteracting)
         {
