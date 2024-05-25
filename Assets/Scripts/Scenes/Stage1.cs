@@ -24,7 +24,7 @@ public class Stage1 : MonoBehaviour
     void Start()
     {
 		lampBlinkCoroutine = lamp.GetComponent<Lamp>().BlinkLight();
-		bodyContainingMorgueBoxDoor.GetComponent<RightAxisDoor>().OnDoorOpened.AddListener(HandleDoorOpened);
+		bodyContainingMorgueBoxDoor.GetComponent<Door>().OnDoorOpened.AddListener(HandleDoorOpened);
 		key.GetComponent<Key>().OnObtain.AddListener(HandleKeyObtained);
 		audioSource = GetComponent<AudioSource>();
 	}
@@ -43,9 +43,9 @@ public class Stage1 : MonoBehaviour
 			lamp.GetComponent<Lamp>().StopCoroutine(lampBlinkCoroutine);
 			lampBlinkCoroutine = lamp.GetComponent<Lamp>().BlinkLight(1, 1f, 0f, false);
 			List<GameObject> doorList = FindGameObjects.ContainsString("MorgueBox_Door");
-			doorList.ForEach(door => door.GetComponent<RightAxisDoor>().Open(false));
-			bodyContainingMorgueBoxDoor.GetComponent<RightAxisDoor>().OnDoorOpened.RemoveListener(HandleDoorOpened);
-			bodyContainingMorgueBoxDoor.GetComponent<RightAxisDoor>().Close(false);
+			doorList.ForEach(door => door.GetComponent<Door>().Open(false));
+			bodyContainingMorgueBoxDoor.GetComponent<Door>().OnDoorOpened.RemoveListener(HandleDoorOpened);
+			bodyContainingMorgueBoxDoor.GetComponent<Door>().Close(false);
 			body.SetActive(false);
 			key.SetActive(true);
 			
