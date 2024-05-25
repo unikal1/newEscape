@@ -8,17 +8,26 @@ public class Paper : MonoBehaviour, IObtainable
 
 	private AudioSource audioSource;
 
+	[SerializeField]
+	private BaseItemData itemData;
+	public BaseItemData ItemData { get { return itemData; } set { itemData = value; } }
+
 	void Awake()
 	{
 		audioSource = GetComponent<AudioSource>();
-		AudioSourceUtil.Instance.SetAudioSourceProperties(audioSource);
+		//AudioSourceUtil.Instance.SetAudioSourceProperties(audioSource);
+		Sprite sprite = Managers.Resource.Load<Sprite>("Sprites/paper0");
+		ItemData = new BaseItemData(DataDefine.EItemType.Paper0, sprite);
 	}
 
 	public void Obtain()
 	{
-		PlayObtainSound();
-		// 오브젝트를 즉시 비활성화
-		Destroy(gameObject);
+		Managers.Sound.Play("Sounds/Objects/paper-collect-1", Define.Sound.SFX);
+		//PlayObtainSound();
+		Managers.Data.InventoryData.itemDatas.Add(ItemData);
+		((UI_GameScene)Managers.Scene.CurrentScene.SceneUI).UI_Inventory.UpdateInventory();
+        // 오브젝트를 즉시 비활성화
+        Destroy(gameObject);
 	}
 	
 	void PlayObtainSound()

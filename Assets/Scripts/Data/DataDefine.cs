@@ -21,10 +21,6 @@ public class DataDefine
         public Inventory()
         {
             itemDatas = new List<BaseItemData>();
-            for (int i = 0; i < 4; i++)
-            {
-                itemDatas.Add(new BaseItemData());
-            }
         }
     }
 }

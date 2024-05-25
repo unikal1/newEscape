@@ -10,15 +10,15 @@ public class BaseItemData
     public EItemType ItemType { get { return itemType; } set { itemType = value; } }
 
     [SerializeField]
-    private string itemSprite;
-    public string ItemSprite { get { return itemSprite; } set { itemSprite = value; } }
+    private Sprite itemSprite;
+    public Sprite ItemSprite { get { return itemSprite; } set { itemSprite = value; } }
         
     public BaseItemData()
     {
         ItemType = EItemType.Default;
         ItemSprite = null;
     }
-    public BaseItemData(EItemType itemType, string itemSprite)
+    public BaseItemData(EItemType itemType, Sprite itemSprite)
     {
         ItemType = itemType;
         ItemSprite = itemSprite;

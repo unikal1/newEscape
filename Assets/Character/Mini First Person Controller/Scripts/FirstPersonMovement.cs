@@ -74,7 +74,7 @@ public class FirstPersonMovement : MonoBehaviour
     public void On1KeyDown()
     {
         Debug.Log("1 Key Down");
-        if (Managers.Data.InventoryData.itemDatas[0].ItemType != DataDefine.EItemType.Default)
+        if (((UI_GameScene)Managers.Scene.CurrentScene.SceneUI).UI_Inventory.UI_Slots[0].ItemData != null)
         {
             ((UI_GameScene)Managers.Scene.CurrentScene.SceneUI).UI_Inventory.SelectSlot(0);
         }
@@ -82,7 +82,7 @@ public class FirstPersonMovement : MonoBehaviour
     public void On2KeyDown()
     {
         Debug.Log("2 Key Down");
-        if (Managers.Data.InventoryData.itemDatas[1].ItemType != DataDefine.EItemType.Default)
+        if (((UI_GameScene)Managers.Scene.CurrentScene.SceneUI).UI_Inventory.UI_Slots[1].ItemData != null)
         {
             ((UI_GameScene)Managers.Scene.CurrentScene.SceneUI).UI_Inventory.SelectSlot(1);
         }
@@ -90,15 +90,15 @@ public class FirstPersonMovement : MonoBehaviour
     private void On3KeyDown()
     {
         Debug.Log("3 Key Click");
-        if (Managers.Data.InventoryData.itemDatas[2].ItemType != DataDefine.EItemType.Default)
+        if (((UI_GameScene)Managers.Scene.CurrentScene.SceneUI).UI_Inventory.UI_Slots[2].ItemData != null)
         {
             ((UI_GameScene)Managers.Scene.CurrentScene.SceneUI).UI_Inventory.SelectSlot(2);
         }
     }
     public void On4KeyDown()
     {
-        Debug.Log("3 Key Click");
-        if (Managers.Data.InventoryData.itemDatas[3].ItemType != DataDefine.EItemType.Default)
+        Debug.Log("4 Key Click");
+        if (((UI_GameScene)Managers.Scene.CurrentScene.SceneUI).UI_Inventory.UI_Slots[3].ItemData != null)
         {
             ((UI_GameScene)Managers.Scene.CurrentScene.SceneUI).UI_Inventory.SelectSlot(3);
         }

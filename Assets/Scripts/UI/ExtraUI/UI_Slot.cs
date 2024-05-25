@@ -21,17 +21,9 @@ public class UI_Slot : UI_Base
     public Image SlotImage { get { return slotImage; } set { slotImage = value; } }
     public override void Init()
     {
-        if(itemData != null)
+        if(ItemData != null)
         {
-            Sprite itemSprite = Managers.Resource.Load<Sprite>($"Sprites/{itemData.ItemSprite}");
-            if(itemSprite != null)
-            {
-                SlotImage.sprite = itemSprite;
-            }
-            else
-            {
-                SlotImage.sprite = null;
-            }
+            SlotImage.sprite = ItemData.ItemSprite;
             SlotImage.color = new Color(1, 1, 1, 1);
         }
         else

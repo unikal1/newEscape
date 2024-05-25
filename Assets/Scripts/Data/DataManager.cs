@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using static DataDefine;
 
-public class DataManager : MonoBehaviour
+public class DataManager
 {
     [SerializeField]
     private Inventory inventorydata;
@@ -14,22 +14,8 @@ public class DataManager : MonoBehaviour
     private int selectedSlotIndex;
     public int SelectedSlotIndex { get { return selectedSlotIndex; } set { selectedSlotIndex = value; } }
     // Start is called before the first frame update
-
-
-    public void Awake()
-    {
-    }
-
     public void Init()
     {
         InventoryData = JsonManager.Load<Inventory>();
-    }
-    private void Start()
-    {
-
-    }
-    // Update is called once per frame
-    void Update()
-    {
     }
 }

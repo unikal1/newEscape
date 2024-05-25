@@ -20,13 +20,13 @@ public class UI_SceneInventory : UI_Base
             UI_Slots.Add(Managers.UI.ShowExtraUI<UI_Slot>());
             UI_Slots[i].Index = i;
             UI_Slots[i].transform.SetParent(transform);
-            UI_Slots[i].ItemData = Managers.Data.InventoryData.itemDatas[i];
+            UI_Slots[i].ItemData = null;
         }
     }
 
     public void UpdateInventory()
     {
-        for(int i = 0; i < 4; i++)
+        for(int i = 0; i < Managers.Data.InventoryData.itemDatas.Count; i++)
         {
             UI_Slots[i].ItemData = Managers.Data.InventoryData.itemDatas[i];
             UI_Slots[i].Init();
@@ -34,7 +34,7 @@ public class UI_SceneInventory : UI_Base
     }
     public void SelectSlot(int index)
     {
-        if (Managers.Data.InventoryData.itemDatas[index].ItemType != DataDefine.EItemType.Default)
+        if(Managers.Data.InventoryData == null || Managers.Data.InventoryData.itemDatas[index] == null)
             return;
 
         SelectedSlot = UI_Slots[index];

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Managers : MonoBehaviour
 {
     static Managers s_instance;
-    static Managers Instance { get { Init(); return s_instance; } }
+    static Managers Instance { get { return s_instance; } }
 
     UI_Manager _ui = new UI_Manager();
     ResourceManager _resource = new ResourceManager();
@@ -25,9 +25,14 @@ public class Managers : MonoBehaviour
     public static PoolManager Pool { get { return Instance._pool; } }
     public static DataManager Data { get { return Instance._data; } }
 
-    void Start()
+    private void Awake()
     {
         Init();
+
+    }
+    void Start()
+    {
+
     }
     // Update is called once per frame
     void Update()
