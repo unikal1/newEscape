@@ -61,5 +61,15 @@ namespace NavKeypad
 
             moving = false;
         }
+
+        private void OnDisable()
+        {
+            StopAllCoroutines();
+        }
+
+        private void OnEnable()
+        {
+            moving = false;
+        }
     }
 }

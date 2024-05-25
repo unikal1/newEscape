@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace NavKeypad { 
-public class KeypadInteractionFPV : MonoBehaviour
-{
-    private Camera cam;
-    private void Awake() => cam = Camera.main;
-    private void Update()
+    public class KeypadInteractionFPV : MonoBehaviour
     {
-        if(gameObject.activeInHierarchy == true)
+        private Camera cam;
+        private void Awake() => cam = Camera.main;
+        private void Update()
         {
+            if(gameObject.activeInHierarchy == true)
+            {
                 var ray = cam.ScreenPointToRay(Input.mousePosition);
 
                 if (Input.GetMouseButtonDown(0))
@@ -19,11 +19,12 @@ public class KeypadInteractionFPV : MonoBehaviour
                     {
                         if (hit.collider.TryGetComponent(out KeypadButton keypadButton))
                         {
-                            keypadButton.PressButton();
+                            if(keypadButton != null)
+                                keypadButton.PressButton();
                         }
                     }
                 }
-            }
+             }
         }
     }
 }

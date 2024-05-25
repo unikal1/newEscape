@@ -45,10 +45,24 @@ namespace NavKeypad
 
         private void Awake()
         {
+            Init();
+        }
+
+        private void Init()
+        {
+            displayingResult = false;
+            accessWasGranted = false;
             ClearInput();
             panelMesh.material.SetVector("_EmissionColor", screenNormalColor * screenIntensity);
         }
-
+        private void OnEnable()
+        {
+            Init();
+        }
+        private void OnDisable()
+        {
+            StopAllCoroutines();
+        }
 
         //Gets value from pressedbutton
         public void AddInput(string input)
