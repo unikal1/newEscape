@@ -22,7 +22,10 @@ public class FirstPersonMovement : MonoBehaviour
     private Keypad keypad;
     public Keypad Keypad { get => keypad; set => keypad = value; }
 
-    void Awake()
+    [SerializeField]
+    private bool isUsingItem;
+    public bool IsUsingItem { get => isUsingItem; set => isUsingItem = value; }
+    void Start()
     {
         // Get the rigidbody on this.
         rigidbody = GetComponent<Rigidbody>();
@@ -54,6 +57,12 @@ public class FirstPersonMovement : MonoBehaviour
 
     void FixedUpdate()
     {
+        var interactUI = FindObjectOfType<UI_ItemUse>();
+        if (interactUI != null)
+        {
+            return;
+        }
+
         // Update IsRunning from input.
         IsRunning = canMove && canRun && Input.GetKey(runningKey);
 
@@ -73,7 +82,11 @@ public class FirstPersonMovement : MonoBehaviour
 
     public void On1KeyDown()
     {
-        Debug.Log("1 Key Down");
+        var interactUI = FindObjectOfType<UI_ItemUse>();
+        if (interactUI != null)
+        {
+            return;
+        }
         if (((UI_GameScene)Managers.Scene.CurrentScene.SceneUI).UI_Inventory.UI_Slots[0].ItemData != null)
         {
             ((UI_GameScene)Managers.Scene.CurrentScene.SceneUI).UI_Inventory.SelectSlot(0);
@@ -81,7 +94,11 @@ public class FirstPersonMovement : MonoBehaviour
     }
     public void On2KeyDown()
     {
-        Debug.Log("2 Key Down");
+        var interactUI = FindObjectOfType<UI_ItemUse>();
+        if (interactUI != null)
+        {
+            return;
+        }
         if (((UI_GameScene)Managers.Scene.CurrentScene.SceneUI).UI_Inventory.UI_Slots[1].ItemData != null)
         {
             ((UI_GameScene)Managers.Scene.CurrentScene.SceneUI).UI_Inventory.SelectSlot(1);
@@ -89,7 +106,11 @@ public class FirstPersonMovement : MonoBehaviour
     }
     private void On3KeyDown()
     {
-        Debug.Log("3 Key Click");
+        var interactUI = FindObjectOfType<UI_ItemUse>();
+        if (interactUI != null)
+        {
+            return;
+        }
         if (((UI_GameScene)Managers.Scene.CurrentScene.SceneUI).UI_Inventory.UI_Slots[2].ItemData != null)
         {
             ((UI_GameScene)Managers.Scene.CurrentScene.SceneUI).UI_Inventory.SelectSlot(2);
@@ -97,7 +118,11 @@ public class FirstPersonMovement : MonoBehaviour
     }
     public void On4KeyDown()
     {
-        Debug.Log("4 Key Click");
+        var interactUI = FindObjectOfType<UI_ItemUse>();
+        if (interactUI != null)
+        {
+            return;
+        }
         if (((UI_GameScene)Managers.Scene.CurrentScene.SceneUI).UI_Inventory.UI_Slots[3].ItemData != null)
         {
             ((UI_GameScene)Managers.Scene.CurrentScene.SceneUI).UI_Inventory.SelectSlot(3);
@@ -105,7 +130,11 @@ public class FirstPersonMovement : MonoBehaviour
     }
     public void OnEKeyDown()
     {
-        Debug.Log("E KeyDown");
+        var interactUI = FindObjectOfType<UI_ItemUse>();
+        if(interactUI != null)
+        {
+            return;
+        }
         ((UI_GameScene)Managers.Scene.CurrentScene.SceneUI).UI_Inventory.UseItem();
         // TODO : 아이템 사용 구현하면 됨
     }
@@ -117,6 +146,10 @@ public class FirstPersonMovement : MonoBehaviour
             if (Keypad.gameObject.activeSelf)
                 Keypad.gameObject.SetActive(false);
         }
+        
+        var interactUI = FindObjectOfType<UI_ItemUse>();
+        if(interactUI != null)
+            Managers.UI.ClosePopUpUI(interactUI);
 
         var fpsLook = FindObjectOfType<FirstPersonLook>();
         if (fpsLook.IsInteracting)

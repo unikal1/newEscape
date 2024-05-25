@@ -9,6 +9,7 @@ public class GameManagerEx
     public GameObject GetPlayer() { return _player; }
     HashSet<GameObject> _monsters = new HashSet<GameObject>();
     public Action<int> OnSpawnEvent;
+
     public GameObject Spawn(Define.WorldObject type, string path, Transform parent = null)
     {
         GameObject go = Managers.Resource.Instantiate(path, parent);

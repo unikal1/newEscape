@@ -9,8 +9,8 @@ public class DataDefine
     public enum EItemType
     {
         Default,
-        Paper0,
-        Paper1,
+        Paper,
+        Map,
         Light,
     }
 

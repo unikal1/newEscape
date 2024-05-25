@@ -36,6 +36,8 @@ public class UI_SceneInventory : UI_Base
     {
         if(Managers.Data.InventoryData == null || Managers.Data.InventoryData.itemDatas[index] == null)
             return;
+        if(SelectedSlot != null)
+            SelectedSlot.BackGround.color = Color.white;
 
         SelectedSlot = UI_Slots[index];
         SelectedSlot.BackGround.color = Color.yellow;

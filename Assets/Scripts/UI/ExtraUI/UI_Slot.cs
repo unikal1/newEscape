@@ -32,10 +32,6 @@ public class UI_Slot : UI_Base
             SlotImage.color = new Color(0.5f, 0.5f, 0.5f, 1);
         }
     }
-    private void Awake()
-    {
-
-    }
 
     // Start is called before the first frame update
     void Start()
@@ -50,11 +46,11 @@ public class UI_Slot : UI_Base
             case DataDefine.EItemType.Default:
                 Debug.Log("No Item");
                 break;
-            case DataDefine.EItemType.Paper0:
-                Debug.Log("Paper0 Use");
+            case DataDefine.EItemType.Paper:
+                Managers.UI.ShowPopUpUI<UI_PaperUse>();
                 break;
-            case DataDefine.EItemType.Paper1:
-                Debug.Log("Paper1 Use");
+            case DataDefine.EItemType.Map:
+                Managers.UI.ShowPopUpUI<UI_MapUse>();
                 break;
         }
     }
