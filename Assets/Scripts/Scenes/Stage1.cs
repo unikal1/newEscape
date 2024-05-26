@@ -38,21 +38,25 @@ public class Stage1 : MonoBehaviour
 			audioSource.PlayOneShot(ScareSound);
 			lampBlinkCoroutine = lamp.GetComponent<Lamp>().BlinkLight();
 
-			// 5초 후에 모든 문 열림, 시체 사라짐
+			// 5초 후
 			yield return new WaitForSeconds(5f);
 			lamp.GetComponent<Lamp>().StopCoroutine(lampBlinkCoroutine);
 			lampBlinkCoroutine = lamp.GetComponent<Lamp>().BlinkLight(1, 1f, 0f, false);
+
+			// 모든 시체박스 문 열림
 			List<GameObject> doorList = FindGameObjects.ContainsString("MorgueBox_Door");
-			doorList.ForEach(door => door.GetComponent<Door>().Open(false));
+			doorList.ForEach(door => door.GetComponent<Door>().Open(false, 0f));
 			bodyContainingMorgueBoxDoor.GetComponent<Door>().OnDoorOpened.RemoveListener(HandleDoorOpened);
-			bodyContainingMorgueBoxDoor.GetComponent<Door>().Close(false);
+			bodyContainingMorgueBoxDoor.GetComponent<Door>().Close(false, 0f);
 			body.SetActive(false);
 			key.SetActive(true);
-			
-			// 전등을 다시 원상태로 복구
+
+			// 다시 원상태로 복구
+
 			yield return new WaitForSeconds(1f);
 			lampBlinkCoroutine = lamp.GetComponent<Lamp>().BlinkLight();
 		}
+		bodyContainingMorgueBoxDoor.GetComponent<Door>().OnDoorOpened.RemoveListener(HandleDoorOpened);
 		StartCoroutine(coroutine());
 	}
 

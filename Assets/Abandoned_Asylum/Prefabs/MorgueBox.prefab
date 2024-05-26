@@ -143,11 +143,18 @@ MonoBehaviour:
   isLocked: 0
   duration: 0.5
   targetRotationY: -80
+  originYRotation: 180
   openSounds:
   - {fileID: 8300000, guid: 1d8094ff0379c544cafe72517d0a871e, type: 3}
   closeSounds:
   - {fileID: 8300000, guid: 84f58342ba211a74386a2b8a9227b0d0, type: 3}
   lockedInteractSounds: []
+  OnDoorOpened:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDoorClosed:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!82 &6606035485901763619
 AudioSource:
   m_ObjectHideFlags: 0
@@ -599,11 +606,18 @@ MonoBehaviour:
   isLocked: 0
   duration: 0.5
   targetRotationY: -80
+  originYRotation: 180
   openSounds:
   - {fileID: 8300000, guid: 1d8094ff0379c544cafe72517d0a871e, type: 3}
   closeSounds:
   - {fileID: 8300000, guid: 84f58342ba211a74386a2b8a9227b0d0, type: 3}
   lockedInteractSounds: []
+  OnDoorOpened:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDoorClosed:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!82 &5572695876041817330
 AudioSource:
   m_ObjectHideFlags: 0
@@ -843,11 +857,18 @@ MonoBehaviour:
   isLocked: 0
   duration: 0.5
   targetRotationY: -80
+  originYRotation: 180
   openSounds:
   - {fileID: 8300000, guid: 1d8094ff0379c544cafe72517d0a871e, type: 3}
   closeSounds:
   - {fileID: 8300000, guid: 84f58342ba211a74386a2b8a9227b0d0, type: 3}
   lockedInteractSounds: []
+  OnDoorOpened:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDoorClosed:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!82 &400749202695089784
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1299,11 +1320,18 @@ MonoBehaviour:
   isLocked: 0
   duration: 0.5
   targetRotationY: -80
+  originYRotation: 180
   openSounds:
   - {fileID: 8300000, guid: 1d8094ff0379c544cafe72517d0a871e, type: 3}
   closeSounds:
   - {fileID: 8300000, guid: 84f58342ba211a74386a2b8a9227b0d0, type: 3}
   lockedInteractSounds: []
+  OnDoorOpened:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDoorClosed:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!82 &6861121728391250669
 AudioSource:
   m_ObjectHideFlags: 0

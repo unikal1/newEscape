@@ -677,9 +677,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.y
       value: -70
       objectReference: {fileID: 0}
+    - target: {fileID: 957511487968949803, guid: 9577457760431e0438304882bd157489, type: 3}
+      propertyPath: originYRotation
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5632507852752392752, guid: 9577457760431e0438304882bd157489, type: 3}
+      propertyPath: originYRotation
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7076003202297543603, guid: 9577457760431e0438304882bd157489, type: 3}
+      propertyPath: originYRotation
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8569502039486919934, guid: 9577457760431e0438304882bd157489, type: 3}
       propertyPath: isOpened
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8569502039486919934, guid: 9577457760431e0438304882bd157489, type: 3}
+      propertyPath: originYRotation
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1392,6 +1408,22 @@ PrefabInstance:
       propertyPath: isOpened
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 957511487968949803, guid: 9577457760431e0438304882bd157489, type: 3}
+      propertyPath: originYRotation
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5632507852752392752, guid: 9577457760431e0438304882bd157489, type: 3}
+      propertyPath: originYRotation
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7076003202297543603, guid: 9577457760431e0438304882bd157489, type: 3}
+      propertyPath: originYRotation
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8569502039486919934, guid: 9577457760431e0438304882bd157489, type: 3}
+      propertyPath: originYRotation
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1823,8 +1855,24 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.y
       value: -15
       objectReference: {fileID: 0}
+    - target: {fileID: 957511487968949803, guid: 9577457760431e0438304882bd157489, type: 3}
+      propertyPath: originYRotation
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5632507852752392752, guid: 9577457760431e0438304882bd157489, type: 3}
+      propertyPath: originYRotation
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7076003202297543603, guid: 9577457760431e0438304882bd157489, type: 3}
       propertyPath: isOpened
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7076003202297543603, guid: 9577457760431e0438304882bd157489, type: 3}
+      propertyPath: originYRotation
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8569502039486919934, guid: 9577457760431e0438304882bd157489, type: 3}
+      propertyPath: originYRotation
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -2015,7 +2063,7 @@ GameObject:
   - component: {fileID: 1363826998}
   - component: {fileID: 1363827003}
   - component: {fileID: 1363827002}
-  - component: {fileID: 1363827005}
+  - component: {fileID: 1363827004}
   m_Layer: 0
   m_Name: DoorD_Right
   m_TagString: interactable
@@ -2224,7 +2272,7 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
---- !u!114 &1363827005
+--- !u!114 &1363827004
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2243,7 +2291,8 @@ MonoBehaviour:
   originYRotation: 180
   openSounds: []
   closeSounds: []
-  lockedInteractSounds: []
+  lockedInteractSounds:
+  - {fileID: 8300000, guid: a9c6df455636c34409ab2c15fc39562f, type: 3}
   OnDoorOpened:
     m_PersistentCalls:
       m_Calls: []
@@ -2503,8 +2552,8 @@ MonoBehaviour:
   isOpened: 0
   isLocked: 1
   duration: 0.5
-  targetRotationY: 100
-  originYRotation: 180
+  targetRotationY: -80
+  originYRotation: 0
   openSounds: []
   closeSounds: []
   lockedInteractSounds:

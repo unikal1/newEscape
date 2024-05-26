@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 64835079563873262}
   - component: {fileID: 4143724064680195370}
   - component: {fileID: 2119065465465943067}
-  - component: {fileID: 2988538484393053343}
+  - component: {fileID: 8031269273060596086}
   m_Layer: 0
   m_Name: Case_Door_R
   m_TagString: interactable
@@ -223,7 +223,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &2988538484393053343
+--- !u!114 &8031269273060596086
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -232,12 +232,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1085674311078598}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 979078e6043f44c48839d4e9b76c6d00, type: 3}
+  m_Script: {fileID: 11500000, guid: 4bf5ce8795b5d54418e4c93cd8f11900, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isOpened: 0
+  isLocked: 0
   duration: 0.5
   targetRotationY: -80
+  originYRotation: 0
   openSounds:
   - {fileID: 8300000, guid: b91f5efefb516a848b4c7db34fb99fed, type: 3}
   - {fileID: 8300000, guid: a2b9eac5151e6c443867ed0d7b4f16c7, type: 3}
@@ -246,7 +248,13 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 577c5f0ca6de19747829f9bac1edb8da, type: 3}
   - {fileID: 8300000, guid: 3a34705b50d3c2148959d42b5371c256, type: 3}
   - {fileID: 8300000, guid: 46d8a0b77f66878429ec36313724c043, type: 3}
-  originYRot: 0
+  lockedInteractSounds: []
+  OnDoorOpened:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDoorClosed:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1349349325325690
 GameObject:
   m_ObjectHideFlags: 0
@@ -401,7 +409,7 @@ GameObject:
   - component: {fileID: 64877165862544934}
   - component: {fileID: 363418890649512200}
   - component: {fileID: 6769529249412518493}
-  - component: {fileID: 3930294302830768285}
+  - component: {fileID: 8972696771569755187}
   m_Layer: 0
   m_Name: Case_Door_L
   m_TagString: interactable
@@ -610,7 +618,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &3930294302830768285
+--- !u!114 &8972696771569755187
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -619,12 +627,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1902630512136534}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 979078e6043f44c48839d4e9b76c6d00, type: 3}
+  m_Script: {fileID: 11500000, guid: 4bf5ce8795b5d54418e4c93cd8f11900, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isOpened: 0
+  isLocked: 0
   duration: 0.5
   targetRotationY: -80
+  originYRotation: 0
   openSounds:
   - {fileID: 8300000, guid: b91f5efefb516a848b4c7db34fb99fed, type: 3}
   - {fileID: 8300000, guid: a2b9eac5151e6c443867ed0d7b4f16c7, type: 3}
@@ -633,4 +643,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 577c5f0ca6de19747829f9bac1edb8da, type: 3}
   - {fileID: 8300000, guid: 3a34705b50d3c2148959d42b5371c256, type: 3}
   - {fileID: 8300000, guid: 46d8a0b77f66878429ec36313724c043, type: 3}
-  originYRot: 0
+  lockedInteractSounds: []
+  OnDoorOpened:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDoorClosed:
+    m_PersistentCalls:
+      m_Calls: []

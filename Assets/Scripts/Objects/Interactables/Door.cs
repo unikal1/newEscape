@@ -56,7 +56,7 @@ public class Door : MonoBehaviour, IInteractable
 		}
 	}
 
-	public void Open(bool playSound = true) {
+	public void Open(bool playSound = true, float duration = -1f) {
 		IEnumerator OpenCoroutine() {
 			if (playSound) PlayOpenSound();
 			float startRotationY = transform.localEulerAngles.y;
@@ -75,6 +75,7 @@ public class Door : MonoBehaviour, IInteractable
 			transform.localRotation = Quaternion.Euler(originXRot, targetRotationY, originZRot);
 		}
 
+		if (duration == -1f) duration = this.duration;
 		if (closeCoroutine != null) {
 			StopCoroutine(closeCoroutine);
 		}
@@ -83,7 +84,7 @@ public class Door : MonoBehaviour, IInteractable
 		OnDoorOpened?.Invoke();
 	}
 
-	public void Close(bool playSound = true) {
+	public void Close(bool playSound = true, float duration = -1f) {
 		IEnumerator CloseCoroutine() {
 			if (playSound) PlayCloseSound();
 			float startRotationY = transform.localEulerAngles.y;
@@ -103,6 +104,7 @@ public class Door : MonoBehaviour, IInteractable
 			transform.localRotation = Quaternion.Euler(originXRot, originYRotation, originZRot);
 		}
 
+		if (duration == -1f) duration = this.duration;
 		if (openCoroutine != null) {
 			StopCoroutine(openCoroutine);
 		}
