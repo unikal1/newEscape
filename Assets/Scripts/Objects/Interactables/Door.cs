@@ -34,7 +34,15 @@ public class Door : BaseInteractiveObj
 	{
 		if (isLocked)
 		{
-			Managers.Sound.Play("Sounds/Objects/try-opening-locked-door-1.wav");
+            Managers.Sound.Play("Sounds/Objects/try-opening-locked-door-1");
+            foreach(var item in Managers.Data.InventoryData.itemDatas)
+            {
+                if(item.ItemType == DataDefine.EItemType.Key)
+                {
+                    isLocked = false;
+                    break;
+                }
+            }
 			return;
 		}
 
@@ -67,7 +75,7 @@ public class Door : BaseInteractiveObj
 
     public IEnumerator CloseCoroutine()
     {
-        Managers.Sound.Play("Sounds/Objects/metal-door-close-1.wav");
+        Managers.Sound.Play("Sounds/Objects/metal-door-close-1");
         float startRotationY = transform.localEulerAngles.y;
 
         float elapsedTime = 0f;

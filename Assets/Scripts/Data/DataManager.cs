@@ -13,6 +13,7 @@ public class DataManager
     [SerializeField]
     private int selectedSlotIndex;
     public int SelectedSlotIndex { get { return selectedSlotIndex; } set { selectedSlotIndex = value; } }
+
     // Start is called before the first frame update
     public void Init()
     {
