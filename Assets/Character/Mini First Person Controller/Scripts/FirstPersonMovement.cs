@@ -23,10 +23,6 @@ public class FirstPersonMovement : MonoBehaviour
     public Keypad Keypad { get => keypad; set => keypad = value; }
 
     [SerializeField]
-    private Light keyPadLight;
-    public Light KeyPadLight { get => keyPadLight; set => keyPadLight = value; }
-
-    [SerializeField]
     private bool isUsingItem;
     public bool IsUsingItem { get => isUsingItem; set => isUsingItem = value; }
     void Start()
@@ -149,11 +145,6 @@ public class FirstPersonMovement : MonoBehaviour
         {
             if (Keypad.gameObject.activeSelf)
                 Keypad.gameObject.SetActive(false);
-        }
-        if(KeyPadLight != null)
-        {
-            if (KeyPadLight.gameObject.activeSelf)
-                KeyPadLight.gameObject.SetActive(false);
         }
         
         var interactUI = FindObjectOfType<UI_ItemUse>();

@@ -22,6 +22,8 @@ namespace NavKeypad
                 return;
             if (!moving)
             {
+                if(keypad.gameObject.activeSelf == false)
+                    return;
                 moveSmoothRoutine = StartCoroutine(MoveSmooth());
                 keypad.AddInput(value);
             }

@@ -11,24 +11,8 @@ public class Door : BaseInteractiveObj
 {
 	[SerializeField] bool isOpened = false;
 	[SerializeField] bool isLocked = false;
-	[SerializeField] float duration = 0.5f; // 여닫는데 걸리는 시간
-	[SerializeField] float targetRotationY = -80f;
-	[SerializeField] float originYRotation = 0f;
+    [SerializeField] Animator anim;
 
-	//public UnityEvent OnDoorOpened;
-	//public UnityEvent OnDoorClosed;
-
-	float originXRot;
-	float originZRot;
-
-	Coroutine openCoroutine = null;
-	Coroutine closeCoroutine = null;
-
-	void Awake() 
-	{
-		originXRot = transform.localEulerAngles.x;
-		originZRot = transform.localEulerAngles.z;
-    }
 
 	public override void Interact() 
 	{
@@ -51,67 +35,13 @@ public class Door : BaseInteractiveObj
 		else 
 			Close();
 	}
-
-	public IEnumerator OpenCoroutine()
-    {
-        Managers.Sound.Play("Sounds/Objects/metal-door-open-1");
-        float startRotationY = transform.localEulerAngles.y;
-        float elapsedTime = 0f;
-
-        while (elapsedTime < duration)
-        {
-            elapsedTime += Time.deltaTime;
-            float t = elapsedTime / duration;
-            float smoothStep = Mathf.SmoothStep(0f, 1f, t);
-            float currentRotationY = Mathf.LerpAngle(startRotationY, targetRotationY, smoothStep);
-            transform.localRotation = Quaternion.Euler(originXRot, currentRotationY, originZRot);
-
-            yield return null;
-        }
-        // Ensure the final rotation is set exactly to the target
-        transform.localRotation = Quaternion.Euler(originXRot, targetRotationY, originZRot);
-        isOpened = true;
-    }
-
-    public IEnumerator CloseCoroutine()
-    {
-        Managers.Sound.Play("Sounds/Objects/metal-door-close-1");
-        float startRotationY = transform.localEulerAngles.y;
-
-        float elapsedTime = 0f;
-
-        while (elapsedTime < duration)
-        {
-            elapsedTime += Time.deltaTime;
-            float t = elapsedTime / duration;
-            float smoothStep = Mathf.SmoothStep(0f, 1f, t);
-            float currentRotationY = Mathf.LerpAngle(startRotationY, originYRotation, smoothStep);
-            transform.localRotation = Quaternion.Euler(originXRot, currentRotationY, originZRot);
-
-            yield return null;
-        }
-        // Ensure the final rotation is set exactly to the target
-        transform.localRotation = Quaternion.Euler(originXRot, originYRotation, originZRot);
-        isOpened = false;
-    }
-
     public void Open() 
 	{
-		if (closeCoroutine != null)
-			StopCoroutine(closeCoroutine);
-
-		openCoroutine = StartCoroutine(OpenCoroutine());
-
-        //OnDoorOpened?.Invoke();
+        anim.SetBool("IsOpen", true);
     }
 
 	public void Close() 
 	{
-		if (openCoroutine != null)
-			StopCoroutine(openCoroutine);
-
-		closeCoroutine = StartCoroutine(CloseCoroutine());
-
-		//OnDoorClosed?.Invoke();
+        anim.SetBool("IsOpen", false);
 	}
 }
