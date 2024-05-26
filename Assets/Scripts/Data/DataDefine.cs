@@ -12,6 +12,7 @@ public class DataDefine
         Paper,
         Map,
         Light,
+        Key,
     }
 
     [System.Serializable]

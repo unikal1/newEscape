@@ -14,13 +14,16 @@ namespace NavKeypad
         [Header("Component References")]
         [SerializeField] private Keypad keypad;
 
+        Coroutine moveSmoothRoutine;
 
         public void PressButton()
         {
+            if(gameObject.activeInHierarchy == false)
+                return;
             if (!moving)
             {
+                moveSmoothRoutine = StartCoroutine(MoveSmooth());
                 keypad.AddInput(value);
-                StartCoroutine(MoveSmooth());
             }
         }
         private bool moving;
@@ -64,12 +67,15 @@ namespace NavKeypad
 
         private void OnDisable()
         {
-            StopAllCoroutines();
+            //if(moveSmoothRoutine != null)
+                //StopCoroutine(moveSmoothRoutine);
+            moving = false;
+            //StopAllCoroutines();
         }
 
         private void OnEnable()
         {
-            moving = false;
+
         }
     }
 }

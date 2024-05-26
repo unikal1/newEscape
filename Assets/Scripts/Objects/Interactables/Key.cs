@@ -3,39 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Key : MonoBehaviour, IObtainable
+public class Key : BaseObtainableObj
 {
-	[SerializeField] List<AudioClip> obtainSounds;
+    public void Start()
+    {
+        Init();
+    }
 
-	public UnityEvent OnObtain;
+    public override void Init()
+    {
+        base.Init();
+        Sprite sprite = Managers.Resource.Load<Sprite>("Sprites/Key");
+        if (sprite == null)
+            ItemData = new BaseItemData(DataDefine.EItemType.Key, null);
+        else
+            ItemData = new BaseItemData(DataDefine.EItemType.Key, sprite);
+    }
 
-	private AudioSource audioSource;
-
-	void Awake()
+    public override void Obtain()
 	{
-		audioSource = GetComponent<AudioSource>();
-		AudioSourceUtil.Instance.SetAudioSourceProperties(audioSource);
-	}
-
-	public void Obtain()
-	{
-		PlayObtainSound();
-		OnObtain?.Invoke();
+		base.Obtain();
+		Managers.Sound.Play("Sounds/Objects/key-get-1", Define.Sound.SFX);
+		//PlayObtainSound();
+		//OnObtain?.Invoke();
 		// 오브젝트를 즉시 비활성화
-		Destroy(gameObject);
+		//Destroy(gameObject);
 	}
-	
-	void PlayObtainSound()
-	{
-		if (obtainSounds.Count > 0)
-		{
-			AudioClip clip = obtainSounds[Random.Range(0, obtainSounds.Count)];
-			// 오디오 소스를 새로운 오브젝트에 복사
-			GameObject audioObject = new GameObject("TempAudio");
-			AudioSource tempAudioSource = audioObject.AddComponent<AudioSource>();
-			tempAudioSource.clip = clip;
-			tempAudioSource.Play();
-			Destroy(audioObject, clip.length); // 오디오 클립이 재생된 후 오브젝트를 파괴
-		}
-	}
+
 }

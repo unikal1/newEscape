@@ -5,7 +5,7 @@ using UnityEngine;
 public class Managers : MonoBehaviour
 {
     static Managers s_instance;
-    static Managers Instance { get { return s_instance; } }
+    static Managers Instance { get { Init(); return s_instance; } }
 
     UI_Manager _ui = new UI_Manager();
     ResourceManager _resource = new ResourceManager();
@@ -27,8 +27,6 @@ public class Managers : MonoBehaviour
 
     private void Awake()
     {
-        Init();
-
     }
     void Start()
     {
@@ -39,6 +37,7 @@ public class Managers : MonoBehaviour
     {
         _input.OnUpdate();
     }
+
     static void Init()
     {
         GameObject go = GameObject.Find("@Manager");
@@ -46,10 +45,10 @@ public class Managers : MonoBehaviour
         {
             go = new GameObject { name = "@Manager" };
             go.AddComponent<Managers>();
+
         }
         DontDestroyOnLoad(go);
         s_instance = go.GetComponent<Managers>();
-
         s_instance._data.Init();
         s_instance._pool.Init();
         s_instance._sound.Init();

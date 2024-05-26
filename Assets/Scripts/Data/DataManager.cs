@@ -16,6 +16,7 @@ public class DataManager
     // Start is called before the first frame update
     public void Init()
     {
-        InventoryData = JsonManager.Load<Inventory>();
+        if(InventoryData == null)
+            InventoryData = JsonManager.Load<Inventory>();
     }
 }

@@ -38,6 +38,8 @@ namespace NavKeypad
         [SerializeField] private TMP_Text keypadDisplayText;
         [SerializeField] private AudioSource audioSource;
 
+        Coroutine displayResultRoutine;
+
 
         private string currentInput;
         private bool displayingResult = false;
@@ -61,7 +63,9 @@ namespace NavKeypad
         }
         private void OnDisable()
         {
-            StopAllCoroutines();
+            //StopAllCoroutines();
+            //if(displayResultRoutine != null)
+                //StopCoroutine(displayResultRoutine);
         }
 
         //Gets value from pressedbutton
@@ -92,7 +96,7 @@ namespace NavKeypad
                 bool granted = currentKombo == keypadCombo;
                 if (!displayingResult)
                 {
-                    StartCoroutine(DisplayResultRoutine(granted));
+                    displayResultRoutine = StartCoroutine(DisplayResultRoutine(granted));
                 }
             }
             else

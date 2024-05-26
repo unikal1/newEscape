@@ -35,7 +35,8 @@ public class Define
     public enum Scene
     {
         Unknown,
-        MainScene
+        MainScene,
+        Stage1
     }
     public enum Sound
     {

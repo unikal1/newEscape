@@ -6,6 +6,7 @@ public class CrosshairController : MonoBehaviour
 {
 	[SerializeField] float detectionRange = 0.5f; // 감지 범위
 	[SerializeField] Image crosshair;
+	public Image Crosshair { get { return crosshair; } set { crosshair = value; } }	
 	[SerializeField] float fadeDuration = 0.5f; // 페이드인/아웃 시간
 
 	private RaycastHit hit;
@@ -15,6 +16,7 @@ public class CrosshairController : MonoBehaviour
 
 	void Start()
 	{
+        Crosshair = ((UI_GameScene)Managers.Scene.CurrentScene.SceneUI).CrossHair;
 		// 처음에 조준선 비활성화
 		SetCrosshairAlpha(0f);
 	}
@@ -45,14 +47,18 @@ public class CrosshairController : MonoBehaviour
 
 	void SetCrosshairAlpha(float alpha)
 	{
-		Color color = crosshair.color;
+		if(Crosshair == null)
+            Crosshair = ((UI_GameScene)Managers.Scene.CurrentScene.SceneUI).CrossHair;
+        Color color = Crosshair.color;
 		color.a = alpha;
-		crosshair.color = color;
+        Crosshair.color = color;
 	}
 
 	IEnumerator FadeCrosshair(float targetAlpha)
 	{
-		float startAlpha = crosshair.color.a;
+		if(Crosshair == null)
+            Crosshair = ((UI_GameScene)Managers.Scene.CurrentScene.SceneUI).CrossHair;
+		float startAlpha = Crosshair.color.a;
 		float elapsedTime = 0f;
 
 		while (elapsedTime < fadeDuration)

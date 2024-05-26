@@ -1,17 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using NavKeypad;
 
 public class KeyPadObj : MonoBehaviour, IInteractable
 {
     [SerializeField]
-    private GameObject interactableKeyPad;
-    public GameObject InteractableKeyPad { get => interactableKeyPad; set => interactableKeyPad = value; }
+    private Keypad interactableKeyPad;
+    public Keypad InteractableKeyPad { get => interactableKeyPad; set => interactableKeyPad = value; }
+    [SerializeField]
+    private Light keyPadLight;
+    public Light KeyPadLight { get => keyPadLight; set => keyPadLight = value; }
     public void Interact()
     {
-        if(interactableKeyPad != null)
+        if(InteractableKeyPad == null)
+            InteractableKeyPad = FindAnyObjectByType<Keypad>();
+        if(InteractableKeyPad != null)
         {
-            interactableKeyPad.SetActive(true);
+            keyPadLight.gameObject.SetActive(true);
+            InteractableKeyPad.gameObject.SetActive(true);
             Cursor.lockState = CursorLockMode.Confined;
             Cursor.visible = true;
             var fpsLook = FindObjectOfType<FirstPersonLook>();

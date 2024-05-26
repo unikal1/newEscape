@@ -19,7 +19,7 @@ namespace NavKeypad {
                     {
                         if (hit.collider.TryGetComponent(out KeypadButton keypadButton))
                         {
-                            if(keypadButton != null)
+                            if(keypadButton != null && keypadButton.gameObject.activeInHierarchy)
                                 keypadButton.PressButton();
                         }
                     }

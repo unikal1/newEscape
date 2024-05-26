@@ -7,7 +7,7 @@ using UnityEngine.Events;
 /// Right Axis Door - TargetRotationY: -80, OriginYRotation: 0
 /// Left Axis Door - TargetRotationY: -100, OriginYRotation: 180
 /// </summary>
-public class Door : MonoBehaviour, IInteractable
+public class Door : BaseInteractiveObj
 {
 	[SerializeField] bool isOpened = false;
 	[SerializeField] bool isLocked = false;
@@ -15,132 +15,95 @@ public class Door : MonoBehaviour, IInteractable
 	[SerializeField] float targetRotationY = -80f;
 	[SerializeField] float originYRotation = 0f;
 
-	[SerializeField] List<AudioClip> openSounds;
-	[SerializeField] List<AudioClip> closeSounds;
-	[SerializeField] List<AudioClip> lockedInteractSounds;
+	//public UnityEvent OnDoorOpened;
+	//public UnityEvent OnDoorClosed;
 
-	public UnityEvent OnDoorOpened;
-	public UnityEvent OnDoorClosed;
-
-	private AudioSource audioSource;
-
-	bool isOpening = false;
 	float originXRot;
 	float originZRot;
 
 	Coroutine openCoroutine = null;
 	Coroutine closeCoroutine = null;
 
-	void Awake() {
+	void Awake() 
+	{
 		originXRot = transform.localEulerAngles.x;
 		originZRot = transform.localEulerAngles.z;
-
-		audioSource = GetComponent<AudioSource>();
-		if(audioSource != null)
-			AudioSourceUtil.Instance.SetAudioSourceProperties(audioSource);
-        else
-            Debug.LogWarning("AudioSource is not attached to " + gameObject.name);
     }
 
-	void IInteractable.Interact() {
+	public override void Interact() 
+	{
 		if (isLocked)
 		{
-			PlayLockedInteractSound();
+			Managers.Sound.Play("Sounds/Objects/try-opening-locked-door-1.wav");
 			return;
 		}
 
-		if (!isOpened) {
+		if (!isOpened) 
 			Open();
-		} else {
+		else 
 			Close();
-		}
 	}
 
-	public void Open(bool playSound = true, float duration = -1f) {
-		IEnumerator OpenCoroutine() {
-			if (playSound) PlayOpenSound();
-			float startRotationY = transform.localEulerAngles.y;
-			float elapsedTime = 0f;
+	public IEnumerator OpenCoroutine()
+    {
+        Managers.Sound.Play("Sounds/Objects/metal-door-open-1");
+        float startRotationY = transform.localEulerAngles.y;
+        float elapsedTime = 0f;
 
-			while (elapsedTime < duration) {
-				elapsedTime += Time.deltaTime;
-				float t = elapsedTime / duration;
-				float smoothStep = Mathf.SmoothStep(0f, 1f, t);
-				float currentRotationY = Mathf.LerpAngle(startRotationY, targetRotationY, smoothStep);
-				transform.localRotation = Quaternion.Euler(originXRot, currentRotationY, originZRot);
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = elapsedTime / duration;
+            float smoothStep = Mathf.SmoothStep(0f, 1f, t);
+            float currentRotationY = Mathf.LerpAngle(startRotationY, targetRotationY, smoothStep);
+            transform.localRotation = Quaternion.Euler(originXRot, currentRotationY, originZRot);
 
-				yield return null;
-			}
-			// Ensure the final rotation is set exactly to the target
-			transform.localRotation = Quaternion.Euler(originXRot, targetRotationY, originZRot);
-		}
+            yield return null;
+        }
+        // Ensure the final rotation is set exactly to the target
+        transform.localRotation = Quaternion.Euler(originXRot, targetRotationY, originZRot);
+        isOpened = true;
+    }
 
-		if (duration == -1f) duration = this.duration;
-		if (closeCoroutine != null) {
+    public IEnumerator CloseCoroutine()
+    {
+        Managers.Sound.Play("Sounds/Objects/metal-door-close-1.wav");
+        float startRotationY = transform.localEulerAngles.y;
+
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = elapsedTime / duration;
+            float smoothStep = Mathf.SmoothStep(0f, 1f, t);
+            float currentRotationY = Mathf.LerpAngle(startRotationY, originYRotation, smoothStep);
+            transform.localRotation = Quaternion.Euler(originXRot, currentRotationY, originZRot);
+
+            yield return null;
+        }
+        // Ensure the final rotation is set exactly to the target
+        transform.localRotation = Quaternion.Euler(originXRot, originYRotation, originZRot);
+        isOpened = false;
+    }
+
+    public void Open() 
+	{
+		if (closeCoroutine != null)
 			StopCoroutine(closeCoroutine);
-		}
+
 		openCoroutine = StartCoroutine(OpenCoroutine());
-		isOpened = true;
-		OnDoorOpened?.Invoke();
-	}
 
-	public void Close(bool playSound = true, float duration = -1f) {
-		IEnumerator CloseCoroutine() {
-			if (playSound) PlayCloseSound();
-			float startRotationY = transform.localEulerAngles.y;
+        //OnDoorOpened?.Invoke();
+    }
 
-			float elapsedTime = 0f;
-
-			while (elapsedTime < duration) {
-				elapsedTime += Time.deltaTime;
-				float t = elapsedTime / duration;
-				float smoothStep = Mathf.SmoothStep(0f, 1f, t);
-				float currentRotationY = Mathf.LerpAngle(startRotationY, originYRotation, smoothStep);
-				transform.localRotation = Quaternion.Euler(originXRot, currentRotationY, originZRot);
-
-				yield return null;
-			}
-			// Ensure the final rotation is set exactly to the target
-			transform.localRotation = Quaternion.Euler(originXRot, originYRotation, originZRot);
-		}
-
-		if (duration == -1f) duration = this.duration;
-		if (openCoroutine != null) {
+	public void Close() 
+	{
+		if (openCoroutine != null)
 			StopCoroutine(openCoroutine);
-		}
+
 		closeCoroutine = StartCoroutine(CloseCoroutine());
-		isOpened = false;
-		OnDoorClosed?.Invoke();
-	}
 
-	
-
-	
-
-	void PlayOpenSound()
-	{
-		if (openSounds.Count > 0)
-		{
-			AudioClip clip = openSounds[Random.Range(0, openSounds.Count)];
-			audioSource.PlayOneShot(clip);
-		}
-	}
-
-	void PlayCloseSound()
-	{
-		if (closeSounds.Count > 0)
-		{
-			AudioClip clip = closeSounds[Random.Range(0, closeSounds.Count)];
-			audioSource.PlayOneShot(clip);
-		}
-	}
-
-	void PlayLockedInteractSound()
-	{
-		if (lockedInteractSounds.Count > 0)
-		{
-			AudioClip clip = lockedInteractSounds[Random.Range(0, lockedInteractSounds.Count)];
-			audioSource.PlayOneShot(clip);
-		}
+		//OnDoorClosed?.Invoke();
 	}
 }
