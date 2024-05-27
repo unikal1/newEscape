@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class Define
 {
-
+    public enum GameState
+    {
+        Ready,
+        Play,
+        End
+    }
     public enum WorldObject
     {
         Unknown,

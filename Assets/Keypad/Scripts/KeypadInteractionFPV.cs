@@ -9,6 +9,7 @@ namespace NavKeypad {
         private void Awake() => cam = Camera.main;
         private void Update()
         {
+
             if(gameObject.activeInHierarchy == true)
             {
                 var ray = cam.ScreenPointToRay(Input.mousePosition);

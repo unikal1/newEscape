@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class Managers : MonoBehaviour
 {
-    static Managers s_instance;
-    static Managers Instance { get { Init(); return s_instance; } }
+    [SerializeField]
+    static Managers s_instance = null;
+    public static Managers Instance { get { Init(); return s_instance; } }
 
     UI_Manager _ui = new UI_Manager();
     ResourceManager _resource = new ResourceManager();
     SceneManagerEx _scene = new SceneManagerEx();
     InputManager _input = new InputManager();
     SoundManager _sound = new SoundManager();
-    PoolManager _pool = new PoolManager();
     GameManagerEx _game = new GameManagerEx();
     DataManager _data = new DataManager();
 
@@ -22,11 +22,11 @@ public class Managers : MonoBehaviour
     public static ResourceManager Resource { get { return Instance._resource; } }
     public static InputManager Input { get { return Instance._input; } }
     public static SoundManager Sound { get { return Instance._sound; } }
-    public static PoolManager Pool { get { return Instance._pool; } }
     public static DataManager Data { get { return Instance._data; } }
 
     private void Awake()
     {
+        Init();
     }
     void Start()
     {
@@ -41,16 +41,20 @@ public class Managers : MonoBehaviour
     static void Init()
     {
         GameObject go = GameObject.Find("@Manager");
-        if (go == null)
+        if (s_instance == null)
         {
-            go = new GameObject { name = "@Manager" };
-            go.AddComponent<Managers>();
-
+            if (go == null)
+            {
+                go = new GameObject { name = "@Manager" };
+            }
+            s_instance = go.GetOrAddComponent<Managers>();
         }
-        DontDestroyOnLoad(go);
-        s_instance = go.GetComponent<Managers>();
+        else
+        {
+            return;
+        }
+
         s_instance._data.Init();
-        s_instance._pool.Init();
         s_instance._sound.Init();
     }
     public static void Clear()
@@ -59,6 +63,5 @@ public class Managers : MonoBehaviour
         Sound.Clear();
         Scene.Clear();
         UI.Clear();
-        Pool.Clear();
     }
 }

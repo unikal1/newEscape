@@ -236,11 +236,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isOpened: 0
+  isLocked: 0
+  anim: {fileID: 0}
   duration: 0.5
   targetRotationY: -80
-  soundVolume: 1
-  openSounds: []
-  closeSounds: []
+  originYRotation: 0
 --- !u!1 &1332779490389988
 GameObject:
   m_ObjectHideFlags: 0
@@ -395,7 +395,7 @@ GameObject:
   - component: {fileID: 64179563341587328}
   - component: {fileID: 6377866078677571809}
   - component: {fileID: 271796490774744146}
-  - component: {fileID: 8126814822159426919}
+  - component: {fileID: 3310246425735333666}
   m_Layer: 0
   m_Name: MedRackDoor_L
   m_TagString: interactable
@@ -604,7 +604,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &8126814822159426919
+--- !u!114 &3310246425735333666
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -613,12 +613,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1752023429364196}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 979078e6043f44c48839d4e9b76c6d00, type: 3}
+  m_Script: {fileID: 11500000, guid: 4bf5ce8795b5d54418e4c93cd8f11900, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isOpened: 0
+  isLocked: 0
+  anim: {fileID: 0}
   duration: 0.5
   targetRotationY: -80
-  openSounds: []
-  closeSounds: []
-  originYRot: 180
+  originYRotation: 0

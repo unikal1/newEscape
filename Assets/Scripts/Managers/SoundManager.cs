@@ -18,7 +18,6 @@ public class SoundManager
         if (root == null)
         {
             root = new GameObject { name = "@Sound" };
-            Object.DontDestroyOnLoad(root);
 
             string[] soundNames = System.Enum.GetNames(typeof(Define.Sound));
             for (int i = 0; i < soundNames.Length - 1; i++)

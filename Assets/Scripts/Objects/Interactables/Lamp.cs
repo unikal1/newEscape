@@ -14,7 +14,7 @@ public class Lamp : MonoBehaviour, IInteractable
 	private AudioSource audioSource;
 	GameObject pointLight;
 
-	void Awake()
+	void Start()
 	{
 		pointLight = transform.GetChild(0).gameObject;
 		audioSource = GetComponent<AudioSource>();

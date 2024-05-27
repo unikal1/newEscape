@@ -10,7 +10,8 @@ public class Flashlight : MonoBehaviour, IObtainable {
 
 	private AudioSource audioSource;
 
-	void Awake() {
+	void Start() 
+	{
 		audioSource = GetComponent<AudioSource>();
 		AudioSourceUtil.Instance.SetAudioSourceProperties(audioSource);
 	}

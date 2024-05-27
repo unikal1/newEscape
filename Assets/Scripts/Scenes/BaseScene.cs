@@ -14,7 +14,7 @@ public abstract class BaseScene : MonoBehaviour
                 _sceneui = GetComponentInChildren<UI_Scene>();
             return _sceneui;
         }
-        protected set { _sceneui = value; }
+        set { _sceneui = value; }
     }
     public Define.Scene SceneType { get; protected set; } = Define.Scene.Unknown;
     void Awake()

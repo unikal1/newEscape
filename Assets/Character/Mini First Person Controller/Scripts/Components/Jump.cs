@@ -24,6 +24,7 @@ public class Jump : MonoBehaviour
 
     void LateUpdate()
     {
+
         // Jump when the Jump button is pressed and we are on the ground.
         if (Input.GetButtonDown("Jump") && (!groundCheck || groundCheck.isGrounded))
         {

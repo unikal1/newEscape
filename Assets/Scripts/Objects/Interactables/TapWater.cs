@@ -12,7 +12,7 @@ public class TapWater : MonoBehaviour, IInteractable {
 
 	private Coroutine playWaterSoundCoroutine;
 
-	void Awake() {
+	void Start() {
 		audioSource = GetComponent<AudioSource>();
 	}
 

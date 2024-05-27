@@ -39,6 +39,7 @@ public class Door : BaseInteractiveObj
                 if(item.ItemType == DataDefine.EItemType.Key)
                 {
                     isLocked = false;
+                    Open();
                     break;
                 }
             }
@@ -53,7 +54,10 @@ public class Door : BaseInteractiveObj
     public void Open() 
 	{
 		if(anim != null)
-			anim.SetBool("IsOpen", true);
+        {
+            Managers.Sound.Play("Sounds/Objects/metal-door-open-1");
+            anim.SetBool("IsOpen", true);
+        }
         else
         {
             if (closeCoroutine != null)
@@ -66,7 +70,10 @@ public class Door : BaseInteractiveObj
 	public void Close() 
 	{
 		if(anim != null)
-			anim.SetBool("IsOpen", false);
+        {
+            Managers.Sound.Play("Sounds/Objects/metal-door-open-1");
+            anim.SetBool("IsOpen", false);
+        }
         else
         {
             if (openCoroutine != null)

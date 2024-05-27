@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 [ExecuteInEditMode]
 public class GroundCheck : MonoBehaviour
@@ -11,7 +12,7 @@ public class GroundCheck : MonoBehaviour
     /// <summary>
     /// Called when the ground is touched again.
     /// </summary>
-    public event System.Action Grounded;
+    public Action Grounded;
 
     const float OriginOffset = .001f;
     Vector3 RaycastOrigin => transform.position + Vector3.up * OriginOffset;
