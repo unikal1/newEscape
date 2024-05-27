@@ -13,11 +13,14 @@ public class Door : BaseInteractiveObj
 	[SerializeField] bool isLocked = false;
     [SerializeField] Animator anim;
 
-    [SerializeField] float duration = 0.5f; // 여닫는데 걸리는 시간
+    [SerializeField] float duration = 0.5f;
     [SerializeField] float targetRotationY = -80f;
     [SerializeField] float originYRotation = 0f;
 
-    float originXRot;
+	[SerializeField] List<AudioClip> openSounds;
+	[SerializeField] List<AudioClip> closeSounds;
+
+	float originXRot;
     float originZRot;
 
     Coroutine openCoroutine = null;
@@ -85,7 +88,7 @@ public class Door : BaseInteractiveObj
 
     public IEnumerator OpenCoroutine()
     {
-        Managers.Sound.Play("Sounds/Objects/metal-door-open-1");
+        PlayOpenSound();
         float startRotationY = transform.localEulerAngles.y;
         float elapsedTime = 0f;
 
@@ -106,7 +109,7 @@ public class Door : BaseInteractiveObj
 
     public IEnumerator CloseCoroutine()
     {
-        Managers.Sound.Play("Sounds/Objects/metal-door-close-1");
+        PlayCloseSound();
         float startRotationY = transform.localEulerAngles.y;
 
         float elapsedTime = 0f;
@@ -125,4 +128,19 @@ public class Door : BaseInteractiveObj
         transform.localRotation = Quaternion.Euler(originXRot, originYRotation, originZRot);
         isOpened = false;
     }
+
+	void PlayOpenSound() {
+		if (openSounds.Count > 0) {
+			AudioClip clip = openSounds[Random.Range(0, openSounds.Count)];
+			Managers.Sound.Play(clip);
+		}
+	}
+
+	void PlayCloseSound() {
+		if (closeSounds.Count > 0) {
+			AudioClip clip = closeSounds[Random.Range(0, closeSounds.Count)];
+			Managers.Sound.Play(clip);
+		}
+	}
+
 }
