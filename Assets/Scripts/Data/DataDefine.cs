@@ -14,6 +14,7 @@ public class DataDefine
         Light,
         Key,
         Battery,
+		Flashlight,
     }
 
     [System.Serializable]

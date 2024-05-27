@@ -52,6 +52,9 @@ public class UI_Slot : UI_Base
             case DataDefine.EItemType.Map:
                 Managers.UI.ShowPopUpUI<UI_MapUse>();
                 break;
+			case DataDefine.EItemType.Flashlight:
+				FindAnyObjectByType<UseFlashlight>().Use();
+				break;
         }
     }
     // Update is called once per frame

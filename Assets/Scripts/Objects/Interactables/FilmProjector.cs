@@ -34,12 +34,9 @@ public class FilmProjector : BaseInteractiveObj {
 		}
 	}
 
-	// Start is called before the first frame update
 	void Start() {
 		if (videoPlayer == null)
 			videoPlayer = GetComponentInChildren<VideoPlayer>();
-
-		// 비디오 플레이어를 초기화하고 비디오를 정지 상태로 설정합니다.
 		videoPlayer.playOnAwake = false;
 		videoPlayer.Stop();
 		spotLight.enabled = false;
