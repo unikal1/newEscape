@@ -26,10 +26,18 @@ public class UI_SceneInventory : UI_Base
 
     public void UpdateInventory()
     {
-        for(int i = 0; i < Managers.Data.InventoryData.itemDatas.Count; i++)
+        for (int i = 0; i < UI_Slots.Count; i++)
         {
-            UI_Slots[i].ItemData = Managers.Data.InventoryData.itemDatas[i];
-            UI_Slots[i].Init();
+            if(i >= Managers.Data.InventoryData.itemDatas.Count)
+            {
+                UI_Slots[i].ItemData = null;
+                UI_Slots[i].Init();
+            }
+            else
+            {
+                UI_Slots[i].ItemData = Managers.Data.InventoryData.itemDatas[i];
+                UI_Slots[i].Init();
+            }
         }
     }
     public void SelectSlot(int index)

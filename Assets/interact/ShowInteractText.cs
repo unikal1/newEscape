@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.EventSystems;
 
 public class ShowInteractText : MonoBehaviour
 {
@@ -28,7 +29,7 @@ public class ShowInteractText : MonoBehaviour
     void ObjectHit()
     {
         ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-        bool hitSomething = Physics.Raycast(ray, out hit, 1f);
+        bool hitSomething = Physics.Raycast(ray, out hit, 3f);
 
         if (hitSomething && hit.collider.gameObject.tag == "interactable")
         {

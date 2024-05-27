@@ -13,6 +13,7 @@ public class DataDefine
         Map,
         Light,
         Key,
+        Battery,
     }
 
     [System.Serializable]

@@ -20,10 +20,4 @@ public class Map : BaseObtainableObj
     {
         Init();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

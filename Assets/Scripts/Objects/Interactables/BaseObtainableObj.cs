@@ -11,7 +11,6 @@ public class BaseObtainableObj : MonoBehaviour, IObtainable
     {
         Managers.Data.InventoryData.itemDatas.Add(ItemData);
         ((UI_GameScene)Managers.Scene.CurrentScene.SceneUI).UI_Inventory.UpdateInventory();
-        // ������Ʈ�� ��� ��Ȱ��ȭ
         Destroy(gameObject);
     }
 

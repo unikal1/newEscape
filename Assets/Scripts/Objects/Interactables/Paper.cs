@@ -12,7 +12,7 @@ public class Paper : BaseObtainableObj
 	public override void Init()
 	{
 		base.Init();
-        Sprite sprite = Managers.Resource.Load<Sprite>("Sprites/paper0");
+        Sprite sprite = Managers.Resource.Load<Sprite>("Sprites/Paper");
         ItemData = new BaseItemData(DataDefine.EItemType.Paper, sprite);
     }
 
