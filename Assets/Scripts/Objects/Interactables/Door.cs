@@ -35,17 +35,17 @@ public class Door : BaseInteractiveObj
     public override void Interact() 
 	{
 		if (isLocked)
-		{
-            Managers.Sound.Play("Sounds/Objects/try-opening-locked-door-1");
+		{          
             foreach(var item in Managers.Data.InventoryData.itemDatas)
             {
                 if(item.ItemType == DataDefine.EItemType.Key)
                 {
                     isLocked = false;
                     Open();
-                    break;
+					return;
                 }
             }
+			Managers.Sound.Play("Sounds/Objects/try-opening-locked-door-1");
 			return;
 		}
 
