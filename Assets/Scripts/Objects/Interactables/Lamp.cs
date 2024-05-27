@@ -10,6 +10,7 @@ public class Lamp : MonoBehaviour, IInteractable
 	[SerializeField] List<AudioClip> turnOnSounds;
 	[SerializeField] List<AudioClip> turnOffSounds;
 	[SerializeField] AudioClip lightBuzzSound;
+	[SerializeField] bool buzz = true;
 
 	private AudioSource audioSource;
 	GameObject pointLight;
@@ -78,7 +79,7 @@ public class Lamp : MonoBehaviour, IInteractable
 		if (turnOnSounds.Count > 0)
 		{
 			AudioClip clip = turnOnSounds[Random.Range(0, turnOnSounds.Count)];
-			audioSource.PlayOneShot(clip);
+			Managers.Sound.Play(clip);
 		}
 	}
 
@@ -87,12 +88,12 @@ public class Lamp : MonoBehaviour, IInteractable
 		if (turnOffSounds.Count > 0)
 		{
 			AudioClip clip = turnOffSounds[Random.Range(0, turnOffSounds.Count)];
-			audioSource.PlayOneShot(clip);
+			Managers.Sound.Play(clip);
 		}
 	}
 	void PlayLightBuzzSound()
 	{
-		if (isActive)
+		if (isActive && buzz)
 		{
 			audioSource.loop = true;
 			audioSource.clip = lightBuzzSound;
@@ -101,7 +102,9 @@ public class Lamp : MonoBehaviour, IInteractable
 	}
 	void StopLightBuzzSound()
 	{
-		audioSource.loop = false;
-		audioSource.Stop();
+		if (isActive && buzz) {
+			audioSource.loop = false;
+			audioSource.Stop();
+		}
 	}
 }
