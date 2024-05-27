@@ -17,7 +17,7 @@ public class Battery : BaseObtainableObj
     public override void Obtain()
     {
         base.Obtain();
-        Managers.Sound.Play("Assets/Resources/Sounds/Objects/paper-collect-1", Define.Sound.SFX);
+        Managers.Sound.Play("Sounds/Objects/paper-collect-1", Define.Sound.SFX);
     }
 
     // Start is called before the first frame update

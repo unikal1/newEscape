@@ -40,9 +40,7 @@ public class FilmProjector : BaseInteractiveObj
     void Start()
     {
         if(videoPlayer == null)
-        {
             videoPlayer = GetComponentInChildren<VideoPlayer>();
-        }
     }
 
     // Update is called once per frame
