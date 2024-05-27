@@ -58,8 +58,9 @@ public class Door : BaseInteractiveObj
 	{
 		if(anim != null)
         {
-            Managers.Sound.Play("Sounds/Objects/metal-door-open-1");
+            Managers.Sound.Play("Sounds/Objects/main-door-open-1");
             anim.SetBool("IsOpen", true);
+			isOpened = true;
         }
         else
         {
@@ -74,9 +75,10 @@ public class Door : BaseInteractiveObj
 	{
 		if(anim != null)
         {
-            Managers.Sound.Play("Sounds/Objects/metal-door-open-1");
+            Managers.Sound.Play("Sounds/Objects/main-door-open-1");
             anim.SetBool("IsOpen", false);
-        }
+			isOpened = false;
+		}
         else
         {
             if (openCoroutine != null)

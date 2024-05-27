@@ -37,4 +37,5 @@ public class Stage1 : BaseScene
         lampBlinkCoroutine = lamp.GetComponent<Lamp>().BlinkLight();
     }
 
+
 }
