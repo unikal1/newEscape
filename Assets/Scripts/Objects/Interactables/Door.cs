@@ -20,6 +20,9 @@ public class Door : BaseInteractiveObj
 	[SerializeField] List<AudioClip> openSounds;
 	[SerializeField] List<AudioClip> closeSounds;
 
+	public UnityEvent OnDoorOpened;
+	public UnityEvent OnDoorClosed;
+
 	float originXRot;
     float originZRot;
 
@@ -54,9 +57,30 @@ public class Door : BaseInteractiveObj
 		else 
 			Close();
 	}
-    public void Open() 
+    public void Open(bool playSound = true, float duration = -1f) 
 	{
-		if(anim != null)
+		IEnumerator OpenCoroutine() {
+			if (playSound) PlayOpenSound();
+			float startRotationY = transform.localEulerAngles.y;
+			float elapsedTime = 0f;
+
+			while (elapsedTime < duration) {
+				elapsedTime += Time.deltaTime;
+				float t = elapsedTime / duration;
+				float smoothStep = Mathf.SmoothStep(0f, 1f, t);
+				float currentRotationY = Mathf.LerpAngle(startRotationY, targetRotationY, smoothStep);
+				transform.localRotation = Quaternion.Euler(originXRot, currentRotationY, originZRot);
+
+				yield return null;
+			}
+			// Ensure the final rotation is set exactly to the target
+			transform.localRotation = Quaternion.Euler(originXRot, targetRotationY, originZRot);
+			isOpened = true;
+		}
+
+		if (duration == -1f) duration = this.duration;
+		OnDoorOpened?.Invoke();
+		if (anim != null)
         {
             Managers.Sound.Play("Sounds/Objects/main-door-open-1");
             anim.SetBool("IsOpen", true);
@@ -71,9 +95,31 @@ public class Door : BaseInteractiveObj
         }
     }
 
-	public void Close() 
+	public void Close(bool playSound = true, float duration = -1f) 
 	{
-		if(anim != null)
+		IEnumerator CloseCoroutine() {
+			if (playSound) PlayCloseSound();
+			float startRotationY = transform.localEulerAngles.y;
+
+			float elapsedTime = 0f;
+
+			while (elapsedTime < duration) {
+				elapsedTime += Time.deltaTime;
+				float t = elapsedTime / duration;
+				float smoothStep = Mathf.SmoothStep(0f, 1f, t);
+				float currentRotationY = Mathf.LerpAngle(startRotationY, originYRotation, smoothStep);
+				transform.localRotation = Quaternion.Euler(originXRot, currentRotationY, originZRot);
+
+				yield return null;
+			}
+			// Ensure the final rotation is set exactly to the target
+			transform.localRotation = Quaternion.Euler(originXRot, originYRotation, originZRot);
+			isOpened = false;
+		}
+
+		OnDoorClosed?.Invoke();
+		if (duration == -1f) duration = this.duration;
+		if (anim != null)
         {
             Managers.Sound.Play("Sounds/Objects/main-door-open-1");
             anim.SetBool("IsOpen", false);
@@ -88,48 +134,7 @@ public class Door : BaseInteractiveObj
         }
 	}
 
-    public IEnumerator OpenCoroutine()
-    {
-        PlayOpenSound();
-        float startRotationY = transform.localEulerAngles.y;
-        float elapsedTime = 0f;
-
-        while (elapsedTime < duration)
-        {
-            elapsedTime += Time.deltaTime;
-            float t = elapsedTime / duration;
-            float smoothStep = Mathf.SmoothStep(0f, 1f, t);
-            float currentRotationY = Mathf.LerpAngle(startRotationY, targetRotationY, smoothStep);
-            transform.localRotation = Quaternion.Euler(originXRot, currentRotationY, originZRot);
-
-            yield return null;
-        }
-        // Ensure the final rotation is set exactly to the target
-        transform.localRotation = Quaternion.Euler(originXRot, targetRotationY, originZRot);
-        isOpened = true;
-    }
-
-    public IEnumerator CloseCoroutine()
-    {
-        PlayCloseSound();
-        float startRotationY = transform.localEulerAngles.y;
-
-        float elapsedTime = 0f;
-
-        while (elapsedTime < duration)
-        {
-            elapsedTime += Time.deltaTime;
-            float t = elapsedTime / duration;
-            float smoothStep = Mathf.SmoothStep(0f, 1f, t);
-            float currentRotationY = Mathf.LerpAngle(startRotationY, originYRotation, smoothStep);
-            transform.localRotation = Quaternion.Euler(originXRot, currentRotationY, originZRot);
-
-            yield return null;
-        }
-        // Ensure the final rotation is set exactly to the target
-        transform.localRotation = Quaternion.Euler(originXRot, originYRotation, originZRot);
-        isOpened = false;
-    }
+ 
 
 	void PlayOpenSound() {
 		if (openSounds.Count > 0) {
