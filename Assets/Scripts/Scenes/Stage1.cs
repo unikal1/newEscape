@@ -43,6 +43,9 @@ public class Stage1 : BaseScene
 			yield return new WaitForSeconds(1f);
 			Managers.Sound.Play(ScareSound);
 			lampBlinkCoroutine = lamp.GetComponent<Lamp>().BlinkLight();
+			List<GameObject> doorList = FindGameObjects.ContainsString("MorgueBox_Door");
+			bodyContainingMorgueBoxDoor.tag = "unInteractable";
+			doorList.ForEach(door => door.tag = "unInteractable");
 
 			// 5초 후
 			yield return new WaitForSeconds(5f);
@@ -50,7 +53,7 @@ public class Stage1 : BaseScene
 			lampBlinkCoroutine = lamp.GetComponent<Lamp>().BlinkLight(1, 1f, 0f, false);
 
 			// 모든 시체박스 문 열림, 시체 사라짐
-			List<GameObject> doorList = FindGameObjects.ContainsString("MorgueBox_Door");
+			
 			doorList.ForEach(door => door.GetComponent<Door>().Open(false, 0f));
 			bodyContainingMorgueBoxDoor.GetComponent<Door>().OnDoorOpened.RemoveListener(HandleDoorOpened);
 			bodyContainingMorgueBoxDoor.GetComponent<Door>().Close(false, 0f);
@@ -58,6 +61,8 @@ public class Stage1 : BaseScene
 
 			// 다시 원상태로 복구
 			yield return new WaitForSeconds(1f);
+			bodyContainingMorgueBoxDoor.tag = "interactable";
+			doorList.ForEach(door => door.tag = "interactable");
 			lampBlinkCoroutine = lamp.GetComponent<Lamp>().BlinkLight();
 		}
 		bodyContainingMorgueBoxDoor.GetComponent<Door>().OnDoorOpened.RemoveListener(HandleDoorOpened);
